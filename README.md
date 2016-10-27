@@ -38,6 +38,7 @@ Usecase-1: Sell used clothes
 AnyActor(Actor)- donor, employer
 
 AnyParty(Role)- manager, organisation
+
 Usecase description: The donor who needs to donate the goods uploads the items and its description on the website.  Donor is notified to come to the donation camp location. These donated items are sold at minimal cost in the donation camp. The thrift stores/non-profit store's employee takes donated items which are not sold in the donation camp back to the store..
 
 Usecase-2: Buy clothes

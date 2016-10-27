@@ -35,34 +35,21 @@ User story:
 
 Usecase-1: Sell used clothes
 
-
-Actor
-Role
-AnyActor
-donor, employer
-AnyParty
-manager, organisation
+AnyActor(Actor)- donor, employer
+AnyParty(Role)- manager, organisation
 Usecase description: The donor who needs to donate the goods uploads the items and its description on the website.  Donor is notified to come to the donation camp location. These donated items are sold at minimal cost in the donation camp. The thrift stores/non-profit store's employee takes donated items which are not sold in the donation camp back to the store..
 
 Usecase-2: Buy clothes
 
-Actor
-Role
-AnyActor
-consumer, employer
-AnyParty
-manager, organisation
+AnyActor(Actor)- consumer, employer
+AnyParty(Role)- manager, organisation
 
 Usecase description: Any consumer who ever likes the goods posted online goes to the sale and buys from the employer or seller. Where the employee belongs to the charity organisation.
 
 
 Usecase-3: Create event
-Actor
-Role
-AnyActor
-consumer, employer, donor
-AnyParty
-manager, organisation
+AnyActor(Actor)- consumer, employer, donor
+AnyParty(Role)- manager, organisation
 
 Usecase description: Organisation creates event based on the data of availability of seller and plans for the event. Seller and consumer both are notified by the organisation regarding the event. If seller can’t come to the sale, organisation’s employee will pick the clothes from seller. 
 

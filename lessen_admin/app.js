@@ -15,6 +15,20 @@ var invoiceManagement = require('./routes/invoiceManagement');
 var adminManagement = require('./routes/adminManagement');
 require('./model/mongoconnect');
 var app = express();
+var Twitter = require('twitter');
+
+/*var client = new Twitter({
+ consumer_key: 	'sZiEb2IfPWojSOcdHTm1ziHyD',//sZiEb2IfPWojSOcdHTm1ziHyD,//process.env.TWITTER_CONSUMER_KEY,
+ consumer_secret: 	'dXnAvqaOU1DJfyZRwBt89vrtowl6ktERRgZeGSguDeG32IDwsW',//process.env.TWITTER_CONSUMER_SECRET,
+ bearer_token: '2353034054-vUPjlz1orl0UWDtogpii9ug1N7Z3k0ZsgObJKJ4'//process.env.TWITTER_BEARER_TOKEN
+ });*/
+
+var client = new Twitter({
+    consumer_key: 	'sZiEb2IfPWojSOcdHTm1ziHyD',
+    consumer_secret: 	'dXnAvqaOU1DJfyZRwBt89vrtowl6ktERRgZeGSguDeG32IDwsW',
+    access_token_key: '2353034054-vUPjlz1orl0UWDtogpii9ug1N7Z3k0ZsgObJKJ4',
+    access_token_secret: 'hUIfxiStQx6I5HVVjn4YVKu8FeNGOO2hxL8vRIWV1iF3K'
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -50,7 +64,6 @@ app.get('/admin_dashboard', dashboard.admin_dashboard); //done
 app.get('/admin_activeUserManagement', userManagement.admin_activeUserManagement); //done
 app.get('/admin_activeLogisticsManagement', hostManagement.admin_activeLogisticsManagement); //done
 app.get('/admin_activeProductManagement', propertyManagement.admin_activeProductManagement); //done
-app.get('/admin_eventManagement', invoiceManagement.admin_eventManagement);
 app.get('/unapprovedHost', hostManagement.unapprovedHost);
 app.get('/admin_pendingLogisticsManagement', hostManagement.admin_pendingLogisticsManagement);
 app.get('/admin_pendingProduct', propertyManagement.admin_pendingProduct);
@@ -61,6 +74,8 @@ app.post('/getUser', userManagement.getUser);
 app.post('/getHost', hostManagement.getHost);
 app.post('/getInvoice', invoiceManagement.getInvoice);
 app.post('/notifyLogistics', invoiceManagement.notifyLogistics);
+app.post('/createEvent', invoiceManagement.createEvent);
+app.get('/admin_eventManagement', invoiceManagement.admin_eventManagement);
 app.post('/getPendingHost', hostManagement.getPendingHost);
 app.post('/getPendingProperty', propertyManagement.getPendingProperty);
 app.post('/approveProperty', propertyManagement.approveProperty);
@@ -69,6 +84,7 @@ app.post('/admin_login', index.adminLogin);
 app.get('/admin_logout', index.adminLogout);
 app.get('/viewAddAdminPage', adminManagement.viewAddAdminPage);
 app.post('/admin_add', adminManagement.addAdmin);
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     var err = new Error('Not Found');

@@ -10,6 +10,21 @@ var pdf = require('pdfkit');
 var fs = require('fs');
 var pdfMake = require('pdfmake');
 var pdfMakePrinter = require('pdfmake/src/printer');
+var Twitter = require('twitter');
+
+/*var client = new Twitter({
+ consumer_key: 	'sZiEb2IfPWojSOcdHTm1ziHyD',//sZiEb2IfPWojSOcdHTm1ziHyD,//process.env.TWITTER_CONSUMER_KEY,
+ consumer_secret: 	'dXnAvqaOU1DJfyZRwBt89vrtowl6ktERRgZeGSguDeG32IDwsW',//process.env.TWITTER_CONSUMER_SECRET,
+ bearer_token: '2353034054-vUPjlz1orl0UWDtogpii9ug1N7Z3k0ZsgObJKJ4'//process.env.TWITTER_BEARER_TOKEN
+ });*/
+
+var client = new Twitter({
+    consumer_key: 	'sZiEb2IfPWojSOcdHTm1ziHyD',
+    consumer_secret: 	'dXnAvqaOU1DJfyZRwBt89vrtowl6ktERRgZeGSguDeG32IDwsW',
+    access_token_key: '2353034054-vUPjlz1orl0UWDtogpii9ug1N7Z3k0ZsgObJKJ4',
+    access_token_secret: 'hUIfxiStQx6I5HVVjn4YVKu8FeNGOO2hxL8vRIWV1iF3K'
+});
+
 
 
 var transporter = nodemailer.createTransport(
@@ -23,14 +38,14 @@ exports.invoices = function (req, res, next) {
         var productColl = mongo.collection('product');
         productColl.aggregate([
             {
-                $match: {is_pickup_pending: true}
+                $match: {"nameValuePairs.is_pickup_pending": true}
             },
             {
-                $match: {is_admin_approved: true}
+                $match: {"nameValuePairs.is_admin_approved": true}
             },
             {
                 $group: {
-                    _id: "$product_seller.user_city",
+                    _id: "$nameValuePairs.product_seller.user_city",
                     count: {
                         $sum: 1
                     }
@@ -56,14 +71,14 @@ exports.getInvoice = function (req, res) {
     mongo.connect(mongoURL, function () {
         var productColl = mongo.collection('product');
         productColl.find({
-            "product_seller.user_city": cityID,
-            is_admin_approved: true,
-            is_pickup_pending: true
+            "nameValuePairs.product_seller.user_city": cityID,
+            "nameValuePairs.is_admin_approved": true,
+            "nameValuePairs.is_pickup_pending": true
         }).toArray(function (err, products) {
             if (err) {
                 throw err;
             }
-            console.log("Products are: ", products);
+            console.log("Products waiting for notifying logistics: ", products);
             res.send(products);
         });
     });
@@ -78,9 +93,9 @@ exports.notifyLogistics = function (req, res) {
         var productColl = mongo.collection('product');
         var pickupColl = mongo.collection('pickup');
         productColl.find({
-            "product_seller.user_city": cityID,
-            is_admin_approved: true,
-            is_pickup_pending: true
+            "nameValuePairs.product_seller.user_city": cityID,
+            "nameValuePairs.is_admin_approved": true,
+            "nameValuePairs.is_pickup_pending": true
         }).toArray(function (err, products) {
             if (err) {
                 throw err;
@@ -125,17 +140,17 @@ exports.notifyLogistics = function (req, res) {
                 });
             }*/
             products.forEach(function(listItem, index){
-                productColl.update({_id: require('mongodb').ObjectID(listItem._id)}, {$set: {is_pickup_pending: false}}, function (err, product) {
-                    console.log("Products are @inside: ", listItem.product_name, index);
+                productColl.update({_id: require('mongodb').ObjectID(listItem._id)}, {$set: {"nameValuePairs.is_pickup_pending": false}}, function (err, product) {
+                    console.log("Products are @inside: ", listItem.nameValuePairs.product_name, index);
                     if (err) {
                         throw err;
                     } else {
                      //   console.log("Product ID here is: ", product_id_object);
                         pickupColl.insertOne({
                             product_id: listItem._id,
-                            product_name : listItem.product_name,
-                            product_seller : listItem.product_seller.user_firstName,
-                            product_city : listItem.product_seller.user_city,
+                            product_name : listItem.nameValuePairs.product_name,
+                            product_seller : listItem.nameValuePairs.product_seller.user_firstName,
+                            product_city : listItem.nameValuePairs.product_seller.user_city,
                             is_pickup_completed: false
                         }, function (err, result) {
 
@@ -151,11 +166,91 @@ exports.notifyLogistics = function (req, res) {
 
             });
 
+    var value1= '';var value2= '';var value3= '';var value4= '';var value5= '';var value6= '';
+            var value7= '';var value8= '';var value9= '';var value10= '';
+            var value11= '';var value12= '';var value13= '';var value14= '';var value15= '';
+            var value16= '';var value17= '';var value18= '';var value19= '';var value20= '';
 
-            var value1 = products[0].product_name;
-            var value2 = products[0].product_seller.user_firstName;
-            var value3 = products[0].product_seller.user_address;
-            var value4 = products[0].product_seller.user_phone;
+            var value21= '';var value22= '';var value23= '';var value24= '';var value25= '';var value26= '';
+            var value27= '';var value28= '';var value29= '';var value30= '';
+            var value31= '';var value32= '';var value33= '';var value34= '';var value35= '';
+            var value36= '';var value37= '';var value38= '';var value39= '';var value40= '';
+
+            var i = 0;
+            if (products[i] && products[i].nameValuePairs) {
+             value1 = products[0].nameValuePairs.product_name;
+             value2 = products[0].nameValuePairs.product_seller.user_firstName;
+             value3 = products[0].nameValuePairs.product_seller.user_address+", "+products[0].nameValuePairs.product_seller.user_city+", "+products[0].nameValuePairs.product_seller.user_state;
+             value4 = products[0].nameValuePairs.product_seller.user_phone;
+                i++;
+            }
+            if (products[i] && products[i].nameValuePairs) {
+                value5 = products[1].nameValuePairs.product_name;
+                value6 = products[1].nameValuePairs.product_seller.user_firstName;
+                value7 = products[1].nameValuePairs.product_seller.user_address+", "+products[1].nameValuePairs.product_seller.user_city+", "+products[1].nameValuePairs.product_seller.user_state;
+                value8 = products[1].nameValuePairs.product_seller.user_phone;
+                i++;
+            }
+            if (products[i] && products[i].nameValuePairs) {
+                value9 = products[2].nameValuePairs.product_name;
+                value10 = products[2].nameValuePairs.product_seller.user_firstName;
+                value11 = products[2].nameValuePairs.product_seller.user_address+", "+products[2].nameValuePairs.product_seller.user_city+", "+products[2].nameValuePairs.product_seller.user_state;
+                value12 = products[2].nameValuePairs.product_seller.user_phone;
+                i++;
+            }
+            if (products[i] && products[i].nameValuePairs) {
+                value13 = products[3].nameValuePairs.product_name;
+                value14 = products[3].nameValuePairs.product_seller.user_firstName;
+                value15= products[3].nameValuePairs.product_seller.user_address+", "+products[3].nameValuePairs.product_seller.user_city+", "+products[3].nameValuePairs.product_seller.user_state;
+                value16 = products[3].nameValuePairs.product_seller.user_phone;
+                i++;
+            }
+            if (products[i] && products[i].nameValuePairs) {
+                value17 = products[4].nameValuePairs.product_name;
+                value18 = products[4].nameValuePairs.product_seller.user_firstName;
+                value19 = products[4].nameValuePairs.product_seller.user_address+", "+products[4].nameValuePairs.product_seller.user_city+", "+products[4].nameValuePairs.product_seller.user_state;
+                value20 = products[4].nameValuePairs.product_seller.user_phone;
+                i++;
+            }
+
+
+            if (products[i] && products[i].nameValuePairs) {
+                value21 = products[5].nameValuePairs.product_name;
+                value22 = products[5].nameValuePairs.product_seller.user_firstName;
+                value23 = products[5].nameValuePairs.product_seller.user_address+", "+products[5].nameValuePairs.product_seller.user_city+", "+products[5].nameValuePairs.product_seller.user_state;
+                value24 = products[5].nameValuePairs.product_seller.user_phone;
+                i++;
+            }
+            if (products[i] && products[i].nameValuePairs) {
+                value25 = products[6].nameValuePairs.product_name;
+                value26 = products[6].nameValuePairs.product_seller.user_firstName;
+                value27 = products[6].nameValuePairs.product_seller.user_address+", "+products[6].nameValuePairs.product_seller.user_city+", "+products[6].nameValuePairs.product_seller.user_state;
+                value28 = products[6].nameValuePairs.product_seller.user_phone;
+                i++;
+            }
+            if (products[i] && products[i].nameValuePairs) {
+                value29 = products[7].nameValuePairs.product_name;
+                value30 = products[7].nameValuePairs.product_seller.user_firstName;
+                value31 = products[7].nameValuePairs.product_seller.user_address+", "+products[7].nameValuePairs.product_seller.user_city+", "+products[7].nameValuePairs.product_seller.user_state;
+                value32 = products[7].nameValuePairs.product_seller.user_phone;
+                i++;
+            }
+            if (products[i] && products[i].nameValuePairs) {
+                value33 = products[8].nameValuePairs.product_name;
+                value34 = products[8].nameValuePairs.product_seller.user_firstName;
+                value35= products[8].nameValuePairs.product_seller.user_address+", "+products[8].nameValuePairs.product_seller.user_city+", "+products[8].nameValuePairs.product_seller.user_state;
+                value36 = products[8].nameValuePairs.product_seller.user_phone;
+                i++;
+            }
+            if (products[i] && products[i].nameValuePairs) {
+                value37 = products[9].nameValuePairs.product_name;
+                value38 = products[9].nameValuePairs.product_seller.user_firstName;
+                value39 = products[9].nameValuePairs.product_seller.user_address+", "+products[9].nameValuePairs.product_seller.user_city+", "+products[9].nameValuePairs.product_seller.user_state;
+                value40 = products[9].nameValuePairs.product_seller.user_phone;
+                i++;
+            }
+
+
             //create PDF
             /* var myDoc = new pdf;
              // myDoc.pipe(fs.createWriteStream('./test.pdf'));
@@ -177,29 +272,73 @@ exports.notifyLogistics = function (req, res) {
             var PdfPrinter = require('pdfmake/src/printer');
             var printer = new PdfPrinter(fonts);
 
-            var i = 0;
             var docDefinition = {
                 content: [
-                    'Lessen Pickup Schedule',
-                    '',
+                    { text: 'Lessen Pickup Schedule', style: 'header' },
+
                     {
-                        table: {
+                       /* table: {
                             // headers are automatically repeated if the table spans over multiple pages
                             // you can declare how many rows should be treated as headers
                             headerRows: 1,
                             widths: ['auto', 'auto', 'auto', 'auto'],
 
                             body: [
-                                [{text: 'Product', bold: true}, {text: 'Donor', bold: true}, {
-                                    text: 'Address',
-                                    bold: true
-                                }, {text: 'Phone', bold: true}],
+                                [{text: 'Product', bold: true},
+                                    {text: 'Donor', bold: true},
+                                    { text: 'Address', bold: true},
+                                 {text: 'Phone', bold: true},
+                                    [value1, value2, value3, value4]],
                                 //[value1, value2, value3, value4],
-                                [products[i].product_name, value2, value3, value4],
+
                             ]
-                        }
+                        }*/
+                        table: {
+                            headerRows: 1,
+                            body: [
+                                [{ text: 'Product', style: 'tableHeader' }, { text: 'Donor', style: 'tableHeader'}, { text: 'Address', style: 'tableHeader' },{ text: 'Phone', style: 'tableHeader' }],
+                                [ value1, value2, value3, value4 ],
+                                [ value5, value6, value7, value8 ],
+                                [ value9, value10, value11, value12 ],
+                                [ value13, value14, value15, value16 ],
+                                [ value17, value18, value19, value20 ],
+                                [ value21, value22, value23, value24 ],
+                                [ value25, value26, value27, value28 ],
+                                [ value29, value30, value31, value32 ],
+                                [ value33, value34, value35, value36 ],
+                                [ value37, value38, value39, value40 ]
+                            ]
+                        },
+                        layout: 'noBorders'
+                    },
+
+                    { text: 'Lessen- Be a noble donor', bold:true},
+                    { text: 'Lessen Inc', bold:true},
+                    { text: '1 Washington Square Inc', bold:true},
+                    { text: 'Downtown San Jose', bold:true},
+                    { text: '95192', bold:true}
+                ],
+                styles: {
+                    header: {
+                        fontSize: 18,
+                        bold: true,
+                        margin: [0, 0, 0, 10]
+                    },
+                    subheader: {
+                        fontSize: 16,
+                        bold: true,
+                        margin: [0, 10, 0, 5]
+                    },
+                    tableExample: {
+                        margin: [0, 5, 0, 15]
+                    },
+                    tableHeader: {
+                        bold: true,
+                        fontSize: 13,
+                        color: 'black'
                     }
-                ]
+                }
+
             };
 
             var pdfDoc = printer.createPdfKitDocument(docDefinition);
@@ -232,7 +371,45 @@ exports.notifyLogistics = function (req, res) {
 
 };
 
+exports.createEvent = function (req, res) {
+
+    var eventName = req.param("eventName");
+    var eventMsg = req.param("eventMsg");
+    var eventDate = req.param("doe");
+    var location = req.param("location");
+    console.log(eventName, eventMsg, eventDate, location);
+
+    mongo.connect(mongoURL, function () {
+        var eventColl = mongo.collection('events');
+        eventColl.insertOne({
+            eventName: eventName,
+            eventMsg: eventMsg,
+            eventDate: eventDate,
+            location: location
+        }, function (err, result) {
+
+            if (err) {
+                console.log("Error while inserting: ", err);
+                throw err;
+            } else {
+                console.log("Inserted into new collection succesfully, tweeting");
+                var status = eventName + '- ' + eventMsg + ' on ' + eventDate + ' at ' + location + ' #lessen' + ' #donate' + ' #donationDrive';
+                client.post('statuses/update', {status: status},  function(error, tweet, response) {
+                    if(error) {
+                        console.log(error)
+                    };
+                    console.log("Tweeted: ", tweet);  // Tweet body.
+                    //console.log(response);  // Raw response object.
+
+                });
+                res.send(200);
+            }
+        });
+    });
+
+};
 
 exports.admin_eventManagement = function (req, res) {
+    console.log("Trying to render event management page");
     res.render('admin_eventManagement');
 };

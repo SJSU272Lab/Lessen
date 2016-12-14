@@ -131,7 +131,7 @@
 
                     <div class="page-heading">
                         <h1>
-                            Logistics Management	</h1>
+                            Create event	</h1>
                         <!--div class="options">
                             <div class="btn-toolbar">
                                 <a href="#" class="btn btn-default"><i
@@ -140,17 +140,45 @@
                         </div-->
                     </div>
                     <div class="container-fluid">
-                        <div class="row">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-4 well well-sm">
+                                    <legend><a href="http://www.jquery2dotnet.com"><i class="glyphicon glyphicon-globe"></i></a> Event</legend>
+                                    <form action="#" method="post" class="form" role="form">
+                                        <input class="form-control" name="eventName" placeholder="Name of the event" type="text" ng-model="eventName"/>
+                                        <textarea name="message" id="message" class="form-control" rows="9" cols="25" required="required" placeholder="Message" ng-model="eventMsg"></textarea>
+                                        <label for="">
+                                            Event Date </label>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                            <input type="text" ng-model="doe" name="doe" id="doe" placeholder="Event date" onfocus="(this.type='date')"required>
+
+                                            </div>
+                                        </div>
+                                        <label>Where</label>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-12">
+                                                <input type="text" class="form-control" ng-model="location" name="location" id="location" placeholder="Location" required>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <input type="button" class="btn btn-lg btn-primary btn-block" value="Submit" data-toggle="modal" data-target="#myModal1" ng-click="createEvent()">
+                                       <!-- <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="createEvent();">
+                                            Create event</button>-->
+                                    </form>
+                                </div>
+                            </div>
+                        <!--<div class="row">
                             <div class="col-md-12">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
+                                <div class="panel panel-default">-->
+                                    <!--<div class="panel-heading">
                                         <h2>Manage Logistics</h2>
                                         <div class="panel-ctrls">
                                         </div>
-                                    </div>
-                                    <div class="panel-body panel-no-padding"><div id="usermanage">    <div id="w0" class="grid-view"><div class="summary"></div>
+                                    </div>-->
+                                    <!--<div class="panel-body panel-no-padding"><div id="usermanage">    <div id="w0" class="grid-view"><div class="summary"></div>-->
                                                 <br>
-                                                <div class="container col-md-12">
+                                               <!-- <div class="container col-md-12">
                                                     <form action="">
                                                         <div class="form-group well">
                                                             <div class="input-group">
@@ -174,12 +202,12 @@
                                                                     <span class="fa fa-caret-up" ng-show="sortReverse"></span>
                                                                 </a>
                                                             </th>
-                                                           <!-- <th>
+                                                           &lt;!&ndash; <th>
                                                                 <a href="#" ng-click="sortName = 'age'; sortReverse = !sortReverse">Dummy
                                                                     <span class="fa fa-caret-down" ng-show="!sortReverse"></span>
                                                                     <span class="fa fa-caret-up" ng-show="sortReverse"></span>
                                                                 </a>
-                                                            </th>-->
+                                                            </th>&ndash;&gt;
                                                             <th>
                                                                 <a href="#" ng-click="sortName = 'age'; sortReverse = !sortReverse">Action
                                                                     <span class="fa fa-caret-down" ng-show="!sortReverse"></span>
@@ -192,17 +220,17 @@
                                                         <tr ng-repeat="x in invoice |orderBy:sortName:sortReverse|filter: searchUserTerm">
                                                             <td ng-bind="x._id"></td>
                                                             <td>{{x.count}}</td>
-                                                           <!-- <td>{{x.createdDate}}</td>-->
+                                                           &lt;!&ndash; <td>{{x.createdDate}}</td>&ndash;&gt;
 
                                                             <td><input type="button" class="btn btn-success" value="View" data-toggle="modal" data-target="#myModal" ng-click="getInvoice(x._id)">
                                                             <input type="button" class="btn btn-success" value="Notify Logistics" data-toggle="modal" data-target="#myModal1" ng-click="notifyLogistics(x._id)"></td>
                                                         </tr>
                                                         </tbody>
-                                                    </table>
-                                                </div>
+                                                    </table>-->
+                                               <!-- </div>
 
                                                 </tbody></table>
-
+-->
                                                 <!--<table class="table table-striped table-bordered"><thead>-->
                                                     <!--<tr><th><a href="/admin_activeUserManagement?sort=firstName" data-sort="firstName">Invoice Id</th><th><a href="/admin_activeUserManagement?sort=firstName" data-sort="firstName">Host Id</a></th><th><a href="/admin_activeUserManagement?sort=state" data-sort="state">Created Date</a></th><th>Actions</th></tr><tr id="w0-filters" class="filters"><td><input type="text" class="form-control" name="Userssearch[firstName]"></td><td><input type="text" class="form-control" name="Userssearch[firstName]"></td><td><input type="text" class="form-control" name="Userssearch[state]"></td><td>&nbsp;</td><td>&nbsp;</td></tr>-->
                                                     <!--</thead>-->
@@ -243,10 +271,10 @@
                                                 <!--<li><a href="/admin/admins/usermanagement?page=9" data-page="8">9</a></li>-->
                                                 <!--<li><a href="/admin/admins/usermanagement?page=10" data-page="9">10</a></li>-->
                                                 <!--<li class="next"><a href="/admin/admins/usermanagement?page=2" data-page="1">&raquo;</a></li></ul>-->
-                                            </div></div></div>
-                                </div>
+                                            <!--</div></div></div>&lt;!&ndash;&ndash;&gt;-->
+                               <!-- </div>
                             </div>
-                        </div><!--?php
+                        </div>&lt;!&ndash;?php-->
 
 
 
@@ -341,11 +369,11 @@
             </div>
             <div class="modal-body">
                 <tr ng-repeat="e in a">
-                    <td>Product: {{e.product_name}}</td>
+                    <td>Product: {{e.nameValuePairs.product_name}}</td>
                     <td>Product: {{e._id}}</td>
-                    <td>Address: {{e.product_seller.user_address}}, {{e.product_seller.user_city}}, {{e.product_seller.user_state}}
-                        , {{e.product_seller.user_zip}}</td>
-                    <td>Donor Name: {{e.product_seller.user_firstName}}</td>
+                    <td>Address: {{e.nameValuePairs.product_seller.user_address}}, {{e.nameValuePairs.product_seller.user_city}}, {{e.nameValuePairs.product_seller.user_state}}
+                        , {{e.nameValuePairs.product_seller.user_zip}}</td>
+                    <td>Donor Name: {{e.nameValuePairs.product_seller.user_firstName}}</td>
                 </tr>
 
 
@@ -363,10 +391,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Notification Successful</h4>
+                <h4 class="modal-title">Event creation Successful</h4>
             </div>
             <div class="modal-body">
-                    Notified our logistics partner!
+                    Created event!
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>

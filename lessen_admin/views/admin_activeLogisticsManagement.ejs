@@ -106,7 +106,7 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="active"><a href="/admin_eventManagement"><i class="fa fa-barcode"></i><span>Logistics management</span></a>
+                                <li class="active"><a href="/admin_eventManagement"><i class="fa fa-barcode"></i><span>Create Event</span></a>
                                 </li>
 
                                 <li><a href="javascript:void(0);"><i
@@ -194,7 +194,7 @@
                                                             <td>{{x.count}}</td>
                                                             <!-- <td>{{x.createdDate}}</td>-->
 
-                                                            <td><input type="button" class="btn btn-success" value="View" data-toggle="modal" data-target="#myModal" ng-click="getInvoice(x._id)">
+                                                            <td><input type="button" class="btn btn-success" value="View" data-toggle="modal" data-target="#myModal2" ng-click="getInvoice(x._id)">
                                                                 <input type="button" class="btn btn-success" value="Notify Logistics" data-toggle="modal" data-target="#myModal1" ng-click="notifyLogistics(x._id)"></td>
                                                         </tr>
                                                         </tbody>
@@ -332,20 +332,20 @@
     </script>
 </div>
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Invoice info</h4>
+                <h4 class="modal-title">Logistics info</h4>
             </div>
             <div class="modal-body">
-                <tr ng-repeat="e in a">
-                    <td>Product: {{e.product_name}}</td>
+                <tr ng-repeat="e in pendingpick">
+                    <td>Product: {{e.nameValuePairs.product_name}}</td>
                     <td>Product: {{e._id}}</td>
-                    <td>Address: {{e.product_seller.user_address}}, {{e.product_seller.user_city}}, {{e.product_seller.user_state}}
+                    <td>Address: {{e.nameValuePairs.product_seller.user_address}}, {{e.nameValuePairs.product_seller.user_city}}, {{e.nameValuePairs.product_seller.user_state}}
                         , {{e.product_seller.user_zip}}</td>
-                    <td>Donor Name: {{e.product_seller.user_firstName}}</td>
+                    <td>Donor Name: {{e.nameValuePairs.product_seller.user_firstName}}</td>
                 </tr>
 
 

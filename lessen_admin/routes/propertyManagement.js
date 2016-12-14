@@ -92,7 +92,54 @@ exports.getPendingProperty = function (req, res) {
 
 
         var productColl = mongo.collection('product');
-        
+
+        productColl.findOne({_id: product_id_object}, function(err, product) {
+            if (err) {
+                throw err;
+            }
+
+            console.log("Updating product info- came from mobile app: ", product);
+            if (product && !product.nameValuePairs.product_seller) {
+                var product_seller = {
+                    "_id": "584e1fddcb34c5635f91464f",
+                    "user_firstName": "Sandeep Kumar",
+                    "user_lastName": "Chawan",
+                    "user_email": "sand@sand.sand",
+                    "user_password": "sand",
+                    "user_address": "65 Rio Robles East, Apt 2402",
+                    "user_city": "San Jose",
+                    "user_state": "CA",
+                    "user_zip": "95134",
+                    "user_phone": "6692655217",
+                    "user_dob": "2016-12-31",
+                    "user_handle": "sand",
+                    "user_balance": 1000,
+                    "user_loginTime": "2016-12-12 04:02:19",
+                    "user_spent": 0,
+                    "user_earned": 0
+                };
+                var end = new Date();
+                var endtime = new Date(end.valueOf() + 4 * 24 * 60 * 60 * 1000); //4 day end for bidding
+                var starttime = new Date();
+                var product_price = product.nameValuePairs.product_price * 0.2;
+                console.log("Product price resetting: ", product_price);
+
+                productColl.update({_id: product_id_object}, {
+                        $set: {
+                            "nameValuePairs.product_seller": product_seller, "nameValuePairs.product_bid_end_time": endtime,
+                            "nameValuePairs.Product_bid_start_time": starttime, "nameValuePairs.product_category_name": "Electronics",
+                            "nameValuePairs.product_category_id": 3
+                        }
+                    },
+                    function (err, product) {
+                        if (err) {
+                            console.log("Product seller could not be updated");
+                            throw err;
+                        }
+                        console.log("Product seller updated");
+                    });
+            }
+        });
         //Load all products:
         productColl.findOne({_id: product_id_object}, function(err, product) {
             if (err) {
@@ -128,7 +175,7 @@ exports.unapprovedProperty = function (req, res) {
         var productColl = mongo.collection('product');
 
                 //Load all products:
-                productColl.find({is_admin_approved: false}).toArray(function(err, products) {
+                productColl.find({"nameValuePairs.is_admin_approved": false}).toArray(function(err, products) {
                     if (err) {
                         throw err;
                     }
@@ -167,6 +214,51 @@ exports.approveProperty = function (req, res, next) {
         //var categoryColl = mongo.collection('category');
         var productColl = mongo.collection('product');
 
+        productColl.findOne({_id: product_id_object}, function(err, product) {
+            if (err) {
+                throw err;
+            }
+
+            console.log("Updating product info- came from mobile app: ", product);
+            if (product && !product.nameValuePairs.product_seller) {
+                var product_seller = {
+                    "_id": "584e1fddcb34c5635f91464f",
+                    "user_firstName": "Sandeep Kumar",
+                    "user_lastName": "Chawan",
+                    "user_email": "sand@sand.sand",
+                    "user_password": "sand",
+                    "user_address": "65 Rio Robles East, Apt 2402",
+                    "user_city": "San Jose",
+                    "user_state": "CA",
+                    "user_zip": "95134",
+                    "user_phone": "6692655217",
+                    "user_dob": "2016-12-31",
+                    "user_handle": "sand",
+                    "user_balance": 1000,
+                    "user_loginTime": "2016-12-12 04:02:19",
+                    "user_spent": 0,
+                    "user_earned": 0
+                };
+                var end = new Date();
+                var endtime = new Date(end.valueOf() + 4 * 24 * 60 * 60 * 1000); //4 day end for bidding
+                var starttime = new Date();
+                var product_price = product.nameValuePairs.product_price * 0.2;
+                console.log("Product price resetting: ", product_price);
+
+                productColl.update({_id: product_id_object}, {$set: {"nameValuePairs.product_seller": product_seller, "nameValuePairs.product_bid_end_time": endtime,
+                "nameValuePairs.Product_bid_start_time": starttime, "nameValuePairs.product_category_name": "Electronics","nameValuePairs.product_price": product_price,
+                        "nameValuePairs.product_category_id": 3}},
+                function (err, product) {
+                        if (err) {
+                            console.log("Product seller could not be updated");
+                            throw err;
+                        }
+                        console.log("Product seller updated");
+                });
+            }
+
+        });
+
         /*categoryColl.find({}).toArray(function(err, categories){
             if (err)
                 throw err;
@@ -175,7 +267,7 @@ exports.approveProperty = function (req, res, next) {
                 //Load all products:
                 //productColl.find({_id: propertyId, is_admin_approved: true}).toArray(function(err, products) {
         console.log("Updating property");
-        productColl.update({_id: product_id_object}, {$set: {is_admin_approved: true}}, function(err, product) {
+        productColl.update({_id: product_id_object}, {$set: {"nameValuePairs.is_admin_approved": true}}, function(err, product) {
             //if (err)
                     if (err)
                         throw err;
@@ -223,7 +315,7 @@ exports.updateProperty = function (req, res) {
 
         var productColl = mongo.collection('product');
 
-        productColl.update({_id: product_id_object}, {$set: {product_price: productPrice, product_type: saleType} }, function(err, product) {
+        productColl.update({_id: product_id_object}, {$set: {"nameValuePairs.product_price": productPrice, "nameValuePairs.product_type": saleType} }, function(err, product) {
             //if (err)
             if (err)
                 throw err;

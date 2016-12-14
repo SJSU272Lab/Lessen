@@ -106,7 +106,7 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li><a href="/admin_eventManagement"><i class="fa fa-barcode"></i><span>Logistics management</span></a>
+                                <li><a href="/admin_eventManagement"><i class="fa fa-barcode"></i><span>Create Event</span></a>
                                 </li>
 
                                 <li><a href="javascript:void(0);"><i
@@ -191,7 +191,7 @@
                                                                                                      <tbody>
                                                                                                      <tr ng-repeat="x in property |orderBy:sortName:sortReverse|filter: searchUserTerm">
                                                                                                          <td ng-bind="x._id"></td>
-                                                                                                         <td>{{x.product_name}}</td>
+                                                                                                         <td>{{x.nameValuePairs.product_name}}</td>
                                                                                                          <td ng-bind="x.product_seller.user_state"></td>
                                                                                                          <td> <input type="button" class="btn btn-success" value="View" data-toggle="modal" data-target="#myModal" ng-click="getProperty(x._id)">
                                                                                                              <input type="button" class="btn btn-success" value="Edit" data-toggle="modal" data-target="#myModal1" ng-click="getProperty(x._id)"></td>
@@ -342,17 +342,17 @@
             </div>
             <div class="modal-body">
                 <img src="{{getProp.product_image_url}}" class="img-responsive">
-                <p>Name: {{getProp.product_name}}</p>
+                <p>Name: {{getProp.nameValuePairs.product_name}}</p>
                 <p>Product Id: {{getProp._id}}</p>
-                <p>Description: {{getProp.product_desc}}</p>
-                <p>Donor: {{getProp.product_seller.user_firstName}}</p>
-                <p>Category: {{getProp.product_category}}</p>
-                <p>Address: {{getProp.product_seller.user_address}}</p>
-                <p>City: {{getProp.product_seller.user_city}}</p>
-                <p>State: {{getProp.product_seller.user_state}}</p>
-                <p>Country: {{getProp.product_seller.user_country}}</p>
-                <p>Zip: {{getProp.product_seller.user_zip}}</p>
-                <p>Price: ${{getProp.product_price}}</p>
+                <p>Description: {{getProp.nameValuePairs.product_desc}}</p>
+                <p>Donor: {{getProp.nameValuePairs.product_seller.user_firstName}}</p>
+                <p>Category: {{getProp.nameValuePairs.product_category}}</p>
+                <p>Address: {{getProp.nameValuePairs.product_seller.user_address}}</p>
+                <p>City: {{getProp.nameValuePairs.product_seller.user_city}}</p>
+                <p>State: {{getProp.nameValuePairs.product_seller.user_state}}</p>
+                <p>Country: {{getProp.nameValuePairs.product_seller.user_country}}</p>
+                <p>Zip: {{getProp.nameValuePairs.product_seller.user_zip}}</p>
+                <p>Price: ${{getProp.nameValuePairs.product_price}}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -372,11 +372,11 @@
             </div>
             <div class="modal-body">
                 <!--<img src="{{getProp.product_image_url}}" class="img-responsive">-->
-                <p>Name: {{getProp.product_name}}</p>
+                <p>Name: {{getProp.nameValuePairs.product_name}}</p>
                 <p ng-bind="getProp._id" hidden></p>
                 <p>Product Id: {{getProp._id}}</p>
-                <p>Description: {{getProp.product_desc}}</p>
-                <p>Donor: {{getProp.product_seller.user_firstName}}</p>
+                <p>Description: {{getProp.nameValuePairs.product_desc}}</p>
+                <p>Donor: {{getProp.nameValuePairs.product_seller.user_firstName}}</p>
                 <!--<p>Category: {{getProp.product_category}}</p>
                 <p>Address: {{getProp.product_seller.user_address}}</p>
                 <p>City: {{getProp.product_seller.user_city}}</p>
@@ -384,7 +384,7 @@
                 <p>Country: {{getProp.product_seller.user_country}}</p>
                 <p>Zip: {{getProp.product_seller.user_zip}}</p>-->
                 <form>
-                <p>Price: <input type="text" name="productPrice" ng-model="productPrice" required placeholder="{{getProp.product_price}}"></p>
+                <p>Price: <input type="text" name="productPrice" ng-model="productPrice" required placeholder="{{getProp.nameValuePairs.product_price}}"></p>
                 <p>Sale Type: <select name="saleType" ng-model="saleType" required>
                         <option selected value="0">Direct Sale</option>
                         <option value="1">Auction Sale</option>

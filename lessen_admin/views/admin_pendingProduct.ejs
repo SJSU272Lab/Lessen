@@ -106,7 +106,7 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li><a href="/admin_eventManagement"><i class="fa fa-barcode"></i><span>Logistics management</span></a>
+                                <li><a href="/admin_eventManagement"><i class="fa fa-barcode"></i><span>Create Event</span></a>
                                 </li>
 
                                 <li><a href="javascript:void(0);"><i
@@ -186,9 +186,9 @@
                                                         </thead>
                                                         <tbody>
                                                         <tr ng-repeat="x in unapproved|filter: searchUserTerm">
-                                                            <td ng-bind="x.product_name"></td>
-                                                            <td>{{x.product_seller.user_firstName}}</td>
-                                                            <td ng-bind="x.product_seller.user_state"></td>
+                                                            <td ng-bind="x.nameValuePairs.product_name"></td>
+                                                            <td>{{x.nameValuePairs.product_seller.user_firstName}}</td>
+                                                            <td ng-bind="x.nameValuePairs.product_seller.user_state"></td>
                                                             <td><input type="button" class="btn btn-info" value="View" data-toggle="modal" data-target="#myModal" ng-click="getPendingProperty(x._id)">
                                                                 <input type="button" class="btn btn-info" value="Edit" data-toggle="modal" data-target="#myModal1" ng-click="getPendingProperty(x._id)">
                                                                 <input type="button" class="btn btn-success" value="Approve" ng-click="approveProperty(x._id)"></td>
@@ -389,16 +389,15 @@
             </div>
             <div class="modal-body">
                 <img src="{{getPending.product_image_url}}" class="img-responsive">
-               <p>Name: {{getPending.product_name}}</p>
+               <p>Name: {{getPending.nameValuePairs.product_name}}</p>
                 <p>Product Id: {{getPending._id}}</p>
-                <p>Category: {{getPending.product_category_name}}</p>
-                <p>Address: {{getPending.product_seller.user_address}}</p>
-                <p>City: {{getPending.product_seller.user_city}}</p>
-                <p>State: {{getPending.product_seller.user_state}}</p>
-                <p>Country: {{getPending.product_seller.user_country}}</p>
-                <p>Zip: {{getPending.user_zip}}</p>
-                <p>Description: {{getPending.product_desc}}</p>
-                <p>Price: ${{getPending.product_price}}</p>
+                <p>Category: {{getPending.nameValuePairs.product_category_name}}</p>
+                <p>Address: {{getPending.nameValuePairs.product_seller.user_address}}</p>
+                <p>City: {{getPending.nameValuePairs.product_seller.user_city}}</p>
+                <p>State: {{getPending.nameValuePairs.product_seller.user_state}}</p>
+                <p>Zip: {{getPending.nameValuePairs.product_seller.user_zip}}</p>
+                <p>Description: {{getPending.nameValuePairs.product_desc}}</p>
+                <p>Price: ${{getPending.nameValuePairs.product_price}}</p>
 
                <!-- <div class="col-md-2  column productbox"  style="margin-left: 5%">
                     <img src="{{getPending.product_image_url}}" class="img-responsive">
@@ -424,11 +423,11 @@
             </div>
             <div class="modal-body">
                 <!--<img src="{{getProp.product_image_url}}" class="img-responsive">-->
-                <p>Name: {{getPending.product_name}}</p>
+                <p>Name: {{getPending.nameValuePairs.product_name}}</p>
                 <p ng-bind="getPending._id" hidden></p>
                 <p>Product Id: {{getPending._id}}</p>
-                <p>Description: {{getPending.product_desc}}</p>
-                <p>Donor: {{getPending.product_seller.user_firstName}}</p>
+                <p>Description: {{getPending.nameValuePairs.product_desc}}</p>
+                <p>Donor: {{getPending.nameValuePairs.product_seller.user_firstName}}</p>
                 <!--<p>Category: {{getProp.product_category}}</p>
                 <p>Address: {{getProp.product_seller.user_address}}</p>
                 <p>City: {{getProp.product_seller.user_city}}</p>
@@ -436,7 +435,7 @@
                 <p>Country: {{getProp.product_seller.user_country}}</p>
                 <p>Zip: {{getProp.product_seller.user_zip}}</p>-->
                 <form>
-                    <p>Price: <input type="text" name="productPrice" ng-model="productPrice" required placeholder="{{getPending.product_price}}"></p>
+                    <p>Price: <input type="text" name="productPrice" ng-model="productPrice" required placeholder="{{getPending.nameValuePairs.product_price}}"></p>
                     <p>Sale Type: <select name="saleType" ng-model="saleType" required>
                             <option value="0">Direct Sale</option>
                             <option value="1">Auction Sale</option>

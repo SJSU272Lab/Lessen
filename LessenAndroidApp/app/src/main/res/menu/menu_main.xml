@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+    <item
+        android:id="@+id/action_add_item"
+        android:icon="@drawable/add_action"
+        android:title="@string/add_item"
+        android:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_log_out"
+        android:title="@string/log_out"
+        android:showAsAction="never" />
+    <item
+        android:id="@+id/action_change_password"
+        android:title="@string/change_password"
+        android:showAsAction="never" />
+    <item
+        android:id="@+id/action_refresh"
+        android:title="@string/refresh"
+        android:icon="@drawable/ic_action"
+        android:showAsAction="ifRoom" />
+</menu>

@@ -1,0 +1,122 @@
+package androidassignment.crossover.com.androidassignment;
+
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+/**
+ * Created by shilpa on 09-12-2016.
+ */
+public class SignIn extends Activity {
+    TextView signUp, forgotPassword;
+    EditText UserName, password;
+    Button LoginUser;
+    DatabaseHelper db;
+    SharedPreferences prefs;
+    public static final String MyPREFERENCES = "MyPrefs";
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.sign_in);
+        Initialization();
+    }
+
+    private void Initialization() {
+        prefs = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        String InitStatus = prefs.getString("is_initialized", "0");
+        if (InitStatus.equals("1")) {
+            Intent GoToMainActivity = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(GoToMainActivity);
+            finish();
+        }
+        db = new DatabaseHelper(getApplicationContext());
+        signUp = (TextView) findViewById(R.id.create_user);
+        UserName = (EditText) findViewById(R.id.etUserName);
+        password = (EditText) findViewById(R.id.etPass);
+        forgotPassword = (TextView) findViewById(R.id.forgot_password);
+        LoginUser = (Button) findViewById(R.id.btnSingIn);
+        LoginUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (UserName.getText().toString().trim().length() > 5) {
+                    if (password.getText().toString().trim().length() > 1) {
+                        if (db.VerifyUser(new UserProfile(
+                                UserName.getText().toString().trim(),
+                                password.getText().toString().trim()))) {
+                            prefs.edit().putString("is_initialized", "1").commit();
+                            prefs.edit().putString("user_name", UserName.getText().toString()).commit();
+                            Intent signUp = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(signUp);
+                            finish();
+                        } else {
+                            ShowToast("Wrong Password or UserName");
+                        }
+                    } else {
+                        ShowToast("Password should be greater than 5 length.");
+                    }
+
+                } else {
+                    ShowToast("Username should be greater than 5 length.");
+                }
+
+            }
+        });
+
+        signUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent signUp = new Intent(getApplicationContext(), SignUp.class);
+                startActivity(signUp);
+            }
+        });
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ForgotPass = new Intent(getApplicationContext(), ForgotPassword.class);
+                startActivity(ForgotPass);
+            }
+        });
+    }
+
+    class AddTempItems extends AsyncTask<Void, Integer, String> {
+        protected void onPreExecute() {
+            Log.d("PreExceute", "On pre Exceute......");
+        }
+
+        protected String doInBackground(Void... arg0) {
+            Log.d("DoINBackGround", "On doInBackground...");
+
+
+            return "You are at PostExecute";
+        }
+
+        protected void onPostExecute(String result) {
+
+        }
+    }
+
+    private void ShowToast(String input) {
+        Toast.makeText(getApplicationContext(), input, Toast.LENGTH_SHORT).show();
+    }
+
+    /////////////////////////////////// permission checks start////////////////////////////////////////////////////////
+
+
+
+}

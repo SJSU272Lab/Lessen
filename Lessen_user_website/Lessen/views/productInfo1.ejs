@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Electronics, Cars, Fashion and More | Lessen</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/products.css' />
+    <link rel='stylesheet' href='/stylesheets/productInfo.css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+    <meta http-equiv="Cache-Control"
+          content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <script>
+        $(function(){
+            $(".category").click(function(){
+                var catid = $(this).attr("id");
+                $.ajax({
+                    url: "/listproducts/"+catid,
+                    type: "get",
+                    success : function(data){
+                        var content = "";
+                        console.log(data.length);
+                        for(var i= 0; i < data.length; i++){
+                            content += "<a href=";
+                            content += "/showproduct/"+data[i]._id +">";
+                            content +=data[i].nameValuePairs.product_name+"</a><br>";
+                        }
+                        console.log(content);
+                        $("#content_"+catid).html(content);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+
+<body style="background-color:#f5f5f5">
+<%if (user) {%>
+<% include ./navheader.ejs %>
+<%} else {%>
+<% include ./navheaderGuest.ejs %>
+<%}%>
+<div>
+    <a href="/homepage"><img width="98" height="100" style="clip:rect(47px, 118px, 95px, 0px); top:35px;left:50px;" alt="" src="/images/logo.jpg" id="gh-logo"></a>
+    <!--<a href="/homepage" style="background-color:#747b82"type="button" class="btn btn-primary">Homepage</a>-->
+    <form class="navbar-form navbar-left" role="search" style="top:60px;left:270px;margin-left:140px;margin-top:-42px" method = "post" action = "/search">
+        <div class="form-group" >Search products
+            <input name="productName" type="text" class="form-control" size="60" placeholder="Search">
+        </div>
+        <select class="dropdown" name="cat" id="options" style="width:170px; height: 35px">
+
+            <% for(var i = 0; i < categories.length;i++){%>
+            <option value="<%= categories[i].category_id %>"><%= categories[i].category_name %></option>
+            <% } %>
+        </select>
+
+        <button type="submit" class="btn btn-default">Search</button>
+    </form>
+</div>
+
+<br>
+
+<div class="container">
+    <div class="card">
+        <div class="container-fliud">
+            <div class="wrapper row">
+                <% if (product.nameValuePairs.product_type==0) { %>
+                <div class="preview col-md-6">
+                    <div class="preview-pic tab-content">
+                        <div class="tab-pane active" id="pic-1"><img src="<%= product.nameValuePairs.product_image_url%>"></div>
+                    </div>
+                </div>
+                <div class="details col-md-6">
+                    <h3 class="product-title"><%= product.nameValuePairs.product_name%></h3>
+                    <p class="product-description"><%= product.nameValuePairs.product_desc%></p>
+                    <h4 class="price">Base price: <span>$<%= product.nameValuePairs.product_price%></span></h4>
+                    <h5 class="sizes">Stock:
+                        <%if (product.nameValuePairs.product_stock==0){%>
+                        <span>SOLD OUT</span>
+                        <%}else{%>
+                        <span><%=product.nameValuePairs.product_stock%></span>
+                        <%}%>
+                    </h5>
+                    <h5 class="sizes">Condition:
+                        <%if (product.nameValuePairs.product_condtion==0){%>
+                        <span>Refurbished</span>
+                        <%}else{%>
+                        <span>New</span>
+                        <%}%>
+                    </h5>
+                    <h5 class="sizes">Donor:
+                        <span><%= product.nameValuePairs.product_seller.user_firstName + " "+ product.nameValuePairs.product_seller.user_lastName %></span>
+                    </h5>
+                    <div class="action">
+                        <form method="post" action= "/cart">
+                            <input type="hidden" name="product_id" value= "<%=product._id%>">
+                            <input type="hidden" name="seller_id" value= "<%=product.nameValuePairs.product_seller._id%>">
+                            <%if (product.nameValuePairs.product_stock==0){%>
+                            <input type="submit" class="add-to-cart btn btn-primary" value="Add to cart" disabled/>
+                            <%} else {%>
+                            <input type="submit" class="add-to-cart btn btn-primary" value="Add to cart"/>
+                            <%} %>
+                        </form>
+                        <!--<button class="add-to-cart btn btn-default" type="button">add to cart</button>-->
+                    </div>
+                </div>
+                <% }else{ %>
+                <div class="preview col-md-6">
+                    <div class="preview-pic tab-content">
+                        <div class="tab-pane active" id="pic-1"><img src="<%= product.nameValuePairs.product_image_url%>"></div>
+                    </div>
+                </div>
+                <div class="details col-md-6">
+                    <h3 class="product-title"><%= product.nameValuePairs.product_name%></h3>
+                    <p class="product-description"><%= product.nameValuePairs.product_desc%></p>
+                    <h4 class="sizes">base price: <span>$<%= product.nameValuePairs.product_price%></span></h4>
+                    <p class="sizes">Bid start time: <%= product.nameValuePairs.Product_bid_start_time%></p>
+                    <p class="sizes">Bid end time: <%= product.nameValuePairs.product_bid_end_time%></p>
+                    <h5 class="sizes">Stock:
+                        <%if (product.nameValuePairs.product_stock==0){%>
+                        <span>SOLD OUT</span>
+                        <%}else{%>
+                        <span><%=product.nameValuePairs.product_stock%></span>
+                        <%}%>
+                    </h5>
+                    <h5 class="sizes">Condition:
+                        <%if (product.nameValuePairs.product_condtion==0){%>
+                        <span>Refurbished</span>
+                        <%}else{%>
+                        <span>New</span>
+                        <%}%>
+                    </h5>
+                    <h5 class="sizes">Donor:
+                        <span><%= product.nameValuePairs.product_seller.user_firstName + " "+ product.nameValuePairs.product_seller.user_lastName %></span>
+                    </h5>
+                    <% var now = new Date(); %>
+                    <% if (product.nameValuePairs.product_type==1 && product.nameValuePairs.product_bid_end_time>now && product.nameValuePairs.product_bid_end==0) {%>
+                    <form method="post" name="form2" id="form2" action="/product/bid/<%=product._id%>">
+                        <input id="submit" name="submit" type="submit" value="BID!" />
+                        <input id="myprice" name="myprice" type="text" />
+                        <input type ="hidden" id="id" name="quantity" value="<%=product.nameValuePairs.product_stock %>" />
+                    </form>
+                    <h4 class="price"> Current highest price:
+                        <%if (product.nameValuePairs.product_max_bid_price && product.nameValuePairs.product_max_bid_price!=0) {%>
+                        $<%=product.nameValuePairs.product_max_bid_price%>
+                        <%} else {%>
+                        Nobody have bid on this yet.
+                        <%}%>
+                    </h4>
+                    <%} else if (product.nameValuePairs.product_type==1 && product.nameValuePairs.product_bid_end_time<now && product.nameValuePairs.product_bid_end==0){%>
+                    <form method="post" name="form2" id="form2" action="/product/bid/<%=product._id%>">
+                        <input id="submit" name="submit" type="submit" value="Auction Has Ended!" disabled/>
+                    </form>
+                    <h4 class="price"> Current highest price:
+                        <%if (product.nameValuePairs.product_max_bid_price && product.nameValuePairs.product_max_bid_price!=0) {%>
+                        $<%=product.nameValuePairs.product_max_bid_price%>
+                        <%} else {%>
+                        Nobody has bid on this yet.
+                        <%}%>
+                    </h4>
+                    <%}else {%>
+                    <form method="post" name="form2" id="form2" action="/bid/<%=product._id%>">
+                        <input id="submit" name="submit" type="submit" value="Auction Has Ended! Please Check your Account" disabled/>
+                    </form>
+                    <h4 class="price"> Current highest price:
+                        <%if (product.nameValuePairs.product_max_bid_price && product.nameValuePairs.product_max_bid_price!=0) {%>
+                        $<%=product.nameValuePairs.product_max_bid_price%>
+                        <%} else {%>
+                        Nobody have bid on this yet.
+                        <%}%>
+                    </h4>
+                    <% } %>
+                </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>

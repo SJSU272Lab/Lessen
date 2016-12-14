@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= user.user_handle%> on Lessen</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <a href="/homepage"><img width="98" height="100" alt="" src="/images/logo.jpg" id="gh-logo"></a>	
+</head>
+<body style="background-color:#f5f5f5">
+<div style="margin-top:70px;margin-left:20px"><h2> My Lessen </h2>
+    Hi, <%= user.user_firstName %> <%= user.user_lastName %>!   Last LoginIn time: <%= user.user_loginTime %>
+</div>
+<br>
+<div class="panel panel-primary" style="margin-left:20px;width:90%">
+    <div class="panel-heading" style="background-color:#747b82">
+        <h3 class="panel-title">Personal Information</h3>
+    </div>
+    <table  class="panel-body" style="margin-left:20px">
+        <tr><td>Lessen Handle :</td> <td> &nbsp &nbsp &nbsp <%= user.user_handle %></td></tr>
+        <tr><td>First Name : </td> <td> &nbsp &nbsp &nbsp <%= user.user_firstName %></td>
+
+        <tr><td>Last Name : </td> <td>  &nbsp &nbsp &nbsp <%= user.user_lastName %></td>
+
+        <tr><td>Balance Money: </td> <td> &nbsp &nbsp &nbsp  $<%= user.user_balance %></td>
+        <tr><td>Amount Earned: </td> <td> &nbsp &nbsp &nbsp  $<%= user.user_earned %></td>
+        <tr><td>Amount Spent: </td> <td> &nbsp &nbsp &nbsp  $<%= user.user_spent %></td>
+
+    </table>
+</div>
+
+<div class="panel panel-primary" style="margin-left:20px;width:90%">
+    <div class="panel-heading" style="background-color:#747b82">
+        <h3 class="panel-title">Contact Information</h3>
+    </div>
+    <table class="panel-body" style="margin-left:20px">
+        <tr><td>Email : </td> <td> &nbsp &nbsp &nbsp <%= user.user_email %></td>
+
+        <tr><td>Address : </td> <td> &nbsp &nbsp &nbsp  <%= user.user_address %></td>
+
+        <tr><td>City : </td> <td> &nbsp &nbsp &nbsp <%= user.user_city %></td>
+
+        <tr><td>State : </td> <td> &nbsp &nbsp &nbsp <%= user.user_state %></td>
+
+        <tr><td>Zipcode : </td> <td> &nbsp &nbsp &nbsp <%= user.user_zip %></td>
+
+    </table>
+</div>
+
+<div class="panel panel-primary" style="margin-left:20px;width:90%">
+    <div class="panel-heading" style="background-color:#747b82">
+        <h3 class="panel-title">Purchase History</h3>
+    </div>
+    <div class="panel-body"  style="margin-left:20px">
+        <% if (purchaseinfo && purchaseinfo.length > 0) {for(var i=0; i<purchaseinfo.length; i++) { %>
+        <p><%= i+1 %>. You purchased items worth : $<%= purchaseinfo[i].nameValuePairs.product_price %> on <%= purchaseinfo[i].nameValuePairs.transactionTime%></p>
+        <%}} else {%>
+        <p>You haven't made any purchases!</p>
+        <%}%>
+    </div>
+</div>
+
+<div class="panel panel-primary" style="margin-left:20px;width:90%">
+    <div class="panel-heading" style="background-color:#747b82">
+        <h3 class="panel-title">Donation History</h3>
+    </div>
+    <div class="panel-body"  style="margin-left:20px">
+
+        <% if (soldinfo && soldinfo.length > 0 ) { for(var i=0; i<soldinfo.length; i++) { %>
+        <p><%= i+1 %>. You donated items worth : $<%= soldinfo[i].nameValuePairs.product_price %> on <%= soldinfo[i].nameValuePairs.transactionTime%></p>
+        <%}} else { %>
+        <p> You haven't made any donations.</p>
+        <%}%>
+    </div>
+</div>
+
+<div style="margin-left:20px;">
+    <a href="/homepage" style="background-color:#747b82" type="button" class="btn btn-primary">Homepage</a>
+</div>
+<br>
+<br>
+</body>
+</html>

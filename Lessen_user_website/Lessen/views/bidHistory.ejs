@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Lessen Bids</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <a href="/homepage"><img width="98" height="100" alt="" src="/images/logo.jpg" id="gh-logo"></a>
+</head>
+
+<header id="header">
+                  <div id="header-region">
+          <div class="region region-header clearfix">
+    <div id="block-savers_locator-header" class="block block-savers-locator block-odd clearfix">
+<body style="background-color:#f5f5f5">
+<br>
+<div class="cartbody" style="margin-left:20px">
+    Hi, <%= user.user_firstName %> <%= user.user_lastName %>!
+</div>
+<br>
+
+<div class="panel panel-primary" style="margin-left:20px;width:90%">
+    <div class="panel-heading"  style="background-color:#747b82">
+        <h3 class="panel-title">Bid History</h3>
+    </div>
+    <div class="panel-body" style="margin-left:20px">
+        <table width="50%" border="0">
+            <% if (result && result.length > 0) {%>
+            <tr>
+                <td>Product Name </td>
+                <td>  Bid Price  </td>
+                <td>  Bid Time   </td>
+            </tr>
+            <% for(var i=0; i<result.length; i++) { %>
+            <tr>
+                <td><a href="/showproduct/<%= result[i].nameValuePairs.bid_product._id %>"><%= result[i].nameValuePairs.bid_product.product_name%></a></td>
+                <td>$<%= result[i].nameValuePairs.bid_price%></td>
+                <td><%= result[i].nameValuePairs.bid_time%></td>
+            </tr>
+            <%}} else { %>
+            <p>You haven't made any bids </p>
+            <%}%>
+        </table>
+    </div>
+</div>
+
+<div style="margin-left:20px;">
+    <a href="/homepage" type="button" style="background-color:#747b82" class="btn btn-primary">Homepage</a>
+</div>
+<br>
+<br>
+</body>
+</html>

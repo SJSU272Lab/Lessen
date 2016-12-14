@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Electronics, Fashion and More | Lessen</title>
+
+    <title>Lessen</title>
+
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/style1.css' />
+    <link rel='stylesheet' href='/stylesheets/animate.css' />
+    <link rel='stylesheet' href='/stylesheets/animations.css' />
+    <link rel='stylesheet' href='/stylesheets/products.css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <meta http-equiv="Cache-Control"
+          content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <script>
+        $(function(){
+            $(".category").click(function(){
+                var catid = $(this).attr("id");
+                $.ajax({
+                    url: "/listproducts/"+catid,
+                    type: "get",
+                    success : function(data){
+                        var content = "";
+                        console.log(data.length);
+                        for(var i= 0; i < data.length; i++){
+                            content += "<a href=";
+                            content += "/showproduct/"+data[i]._id +">";
+                            content +=data[i].product_name+"</a><br>";
+                        }
+                        console.log(content);
+                        $("#content_"+catid).html(content);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body style="background-color:#f5f5f5">
+	<% include ./navheaderGuest.ejs %>
+	<video id="intro-video" class="video-cover" src="https://d2fa3j67sd1nwo.cloudfront.net/video/homepage.020d4af35dca.mp4" autoplay="" loop=""></video>
+    <a href="/homepage"><img width="140" height="200" style="clip:rect(47px, 118px, 95px, 0px); top:35px;left:50px;" alt="" src="/images/logo.jpg" id="gh-logo"></a>
+    <!--<a href="/homepage" style="background-color:#747b82"type="button" class="btn btn-primary">Homepage</a>-->
+    <form class="navbar-form navbar-left" role="search" style="top:60px;left:270px;margin-left:140px;margin-top:-42px" method = "post" action = "/search">
+        <div class="form-group" >Search products
+            <input name="productName" type="text" class="form-control" size="60" placeholder="Search">
+        </div>
+        <select class="dropdown" name="cat" id="options" style="width:170px; height: 35px">
+
+            <% for(var i = 0; i < categories.length;i++){%>
+            <option value="<%= categories[i].category_id %>"><%= categories[i].category_name %></option>
+            <% } %>
+        </select>
+
+        <button type="submit" class="btn btn-default">Search</button>
+    </form>
+</div>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+
+                <% for(var i = 0; i < categories.length;i++){%>
+                <li class="dropdown">
+                    <a class="category" id="<%= categories[i].category_id %>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <%= categories[i].category_name %>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#" id="content_<%= categories[i].category_id %>"></a></li>
+                    </ul>
+
+                </li>
+                <% } %>
+            </ul>
+        </div>
+
+    </div>
+
+</nav>
+
+<div class="container">
+  <!--   for(var i = 0; i < products.length;i++){
+    <div class="spe-prods">
+        <div class="mainbox">
+            <h3>Product name</h3>
+            <h4>product_desc</h4>
+            <img  src="products[i].product_image_url" width="200" height="150"></img>
+        </div>
+
+        <div class="price-big">
+            <div>
+                <div class="floatting-price">
+                    <h4>$%=products[i].product_price%</h4>
+                </div>
+            </div>
+            <div class="ordersection">
+                <a href="/showproduct/%=products[i]._id%" class="buybtn">Show more</a>
+            </div>
+        </div>
+    </div>
+    } -->
+    <% for(var i = 0; i < products.length;i++){%>
+    <div class="col-md-2  column productbox"  style="margin-left: 5%">
+        <img src="<%= products[i].nameValuePairs.product_image_url%>" class="img-responsive">
+        <div class="producttitle"><%= products[i].nameValuePairs.product_name%></div>
+        <div class="productprice"><div class="pull-right"><a href="/showproduct/<%=products[i]._id%>" class="btn btn-danger btn-sm" role="button">Show more</a></div><div class="pricetext">$<%=products[i].nameValuePairs.product_price%></div></div>
+    </div>
+    <% } %>
+</div>
+<div id="player" class="player player-12c00cb3-d26b-42a3-aa8d-4a3654e45a4b js-player-fullscreen with-fullscreen with-sticky-custom-logo" tabindex="0"><div class="video-wrapper"><div class="video cover" data-thumb="https://i.vimeocdn.com/video/584650982.webp?mw=700&amp;mh=396" data-thumb-width="700" style="background-image: none;"><div class="telecine" style="transform: scale(1.0065);"><video preload="" src="blob:https://player.vimeo.com/1ea7f3ad-0f28-420d-bd48-8df7ab621e2f"></video></div></div></div><div class="target hidden" hidden=""></div><div class="captions hidden" hidden="" aria-live="assertive" style="font-size: 17px;"></div><div class="outro-wrapper hidden" hidden=""><div class="outro" role="dialog" aria-live="assertive"></div></div><div class="controls-wrapper"><div class="title hidden invisible" role="contentinfo" hidden=""><header>  <div class="headers">  <div class="sub-title"><h2 class="byline-from">from <a href="https://vimeo.com/offerup" target="_blank">OfferUp, Inc</a></h2>  </div>  </div></header></div><div class="controls invisible hidden" hidden=""><button class="play rounded-box state-paused" title="Play" data-title-play="Play" data-title-pause="Pause" aria-label="Play"><div class="tiny-bars"><svg width="100%" height="100%" viewBox="0 0 65 40"><defs><clipPath id="rounded-border"><rect height="100%" width="100%" x="0" y="0" rx="5"></rect></clipPath> <pattern id="tiny-buffer" patternUnits="userSpaceOnUse" x="0" y="0" width="10" height="10" viewBox="0 0 10 10"><line x1="5" y1="-1" x2="-5" y2="10" stroke-width="2" stroke="#666" stroke-linecap="butt"></line><line x1="10" y1="-1" x2="0" y2="10" stroke-width="2" stroke="#666" stroke-linecap="butt"></line><line x1="15" y1="-1" x2="5" y2="10" stroke-width="2" stroke="#666" stroke-linecap="butt"></line></pattern> </defs><g clip-path="url(#rounded-border)"><rect class="buffer hidden" height="3" width="110%" x="0" y="37" fill="url(#tiny-buffer)"></rect><rect class="loaded" height="3" width="39.996%" x="0" y="37" fill="#666"></rect><rect class="played fill" height="3" width="5.59%" x="0" y="37"></rect></g></svg></div><div class="play-icon"><svg viewBox="0 0 20 20" preserveAspectRatio="xMidYMid" tabindex="-1"><polygon class="fill" points="1,0 20,10 1,20"></polygon></svg></div><div class="pause-icon"><svg viewBox="0 0 20 20" preserveAspectRatio="xMidYMid" tabindex="-1"><rect class="fill" width="6" height="20" x="0" y="0"></rect><rect class="fill" width="6" height="20" x="12" y="0"></rect></svg></div></button><div class="play-bar rounded-box"><div class="progress"><div class="buffer hidden"><svg width="110%" tabindex="-1"><defs> <pattern id="buffer" patternUnits="userSpaceOnUse" x="0" y="0" width="10" height="10" viewBox="0 0 10 10"><line x1="5" y1="-1" x2="-5" y2="10" stroke-width="2" stroke="#666" stroke-linecap="butt"></line><line x1="10" y1="-1" x2="0" y2="10" stroke-width="2" stroke="#666" stroke-linecap="butt"></line><line x1="15" y1="-1" x2="5" y2="10" stroke-width="2" stroke="#666" stroke-linecap="butt"></line></pattern> </defs><rect fill="url(#buffer)" width="100%" height="100%"></rect></svg></div><div class="loaded" role="progressbar" aria-label="loaded" aria-valuemin="0" aria-valuemax="60" aria-valuenow="24.021" aria-valuetext="24 seconds loaded" style="width: 39.996%;"></div><div class="played" role="progressbar" aria-label="played" aria-valuemin="0" aria-valuemax="60" aria-valuenow="3.357" aria-valuetext="3 seconds played" style="width: 5.59%;"></div><div class="cuepoints"></div><div class="thumb-preview invisible hidden" role="presentation" aria-hidden="true"><div class="thumb"></div></div><div class="ghost-timecode invisible hidden" role="presentation" aria-hidden="true"><div class="box">00:00</div></div><div class="timecode" role="presentation" aria-hidden="true" style="left: 5.59%;"><div class="box">00:03</div></div></div>  <button class="hd" title="Select video quality" aria-label="HD"> <svg viewBox="0 0 102.717 47.035" preserveAspectRatio="xMidYMid" tabindex="-1"><path class="fill" d="M100.014 6.758c-1.352-2.162-3.244-3.781-5.676-5.134-2.434-1.083-5.947-1.624-10.274-1.624h-21.625l-7.297 47.035h21.895c2.434 0 5.676-.274 8.92-1.352 2.434-.542 4.596-1.627 7.03-3.785 2.161-1.621 4.324-4.055 5.675-7.028 1.621-2.701 2.973-6.757 3.786-11.623.269-3.244.269-6.487.269-9.19-.54-2.704-1.352-5.138-2.703-7.299zm-12.433 16.76c-.541 3.783-1.352 6.485-2.165 8.109-1.08 1.893-2.162 2.703-3.782 3.514-1.083.541-3.515 1.082-6.217 1.082h-3.517l3.517-25.41h3.782c3.514 0 6.217.811 7.568 2.703 1.083 1.625 1.352 5.135.814 10.002z"></path><path class="fill" d="M37.572,0L35.14,16.491H19.463L21.895,0H7.027L0,47.035h14.866l2.703-18.922h15.677l-2.971,18.922h14.866L52.439,0H37.572z"></path></svg> </button>  <button class="hidden toggle effect off" title="Choose an effect to apply to the video"><svg viewBox="0 0 210 200" version="1.1"><g fill="none" fill-rule="evenodd"><circle class="red" fill="#f00" cx="63.5" cy="136.5" r="63.5"></circle><circle class="blue" fill="#2653ff" cx="146.5" cy="136.5" r="63.5"></circle><circle class="green" fill="#0f0" cx="104.5" cy="63.5" r="63.5"></circle></g></svg></button>  <button class="pip hidden enter" title="Enter Picture-in-Picture" data-title-enter="Enter Picture-in-Picture" data-title-return="Exit Picture-in-Picture" hidden=""> <svg class="pip-icon" viewBox="0 0 16 12"><polygon class="fill" points="6 8 1 8 1 1 14 1 14 6 15 6 15 0 0 0 0 9 6 9 6 8"></polygon><rect class="fill" x="7" y="7" width="9" height="5"></rect><polyline class="fill enter" transform="translate(4, 4) rotate(180) translate(-4, -4)" points="5.33 2 5.33 3 3.67 3 5.67 5 5 5.67 3 3.67 3 5.33 2 5.33 2 2"></polyline><polyline class="fill return" points="5.33 2 5.33 3 3.67 3 5.67 5 5 5.67 3 3.67 3 5.33 2 5.33 2 2"></polyline></svg> </button><button class="fullscreen" title="Enter full screen" data-title-fullscreen="Enter full screen" data-title-unfullscreen="Exit full screen" aria-label="Fullscreen"><div class="fullscreen-icon"><svg viewBox="0 0 12 12" preserveAspectRatio="xMidYMid" tabindex="-1"><polyline class="fill" points="6,6 5.9,2 4.9,3 2.9,1 1,2.9 3,4.9 2,5.9" transform="translate(6,6)"></polyline><polyline class="fill" points="6,6 5.9,2 4.9,3 2.9,1 1,2.9 3,4.9 2,5.9" transform="translate(6,6) rotate(90)"></polyline><polyline class="fill" points="6,6 5.9,2 4.9,3 2.9,1 1,2.9 3,4.9 2,5.9" transform="translate(6,6) rotate(180)"></polyline><polyline class="fill" points="6,6 5.9,2 4.9,3 2.9,1 1,2.9 3,4.9 2,5.9" transform="translate(6,6) rotate(270)"></polyline></svg></div><div class="unfullscreen-icon"><svg viewBox="0 0 12 12" preserveAspectRatio="xMidYMid" tabindex="-1"><polyline class="fill" points="-1,-1 -1.1,-5 -2.1,-4 -4.1,-6 -6,-4.1 -4,-2.1 -5,-1.1" transform="translate(6,6) "></polyline><polyline class="fill" points="-1,-1 -1.1,-5 -2.1,-4 -4.1,-6 -6,-4.1 -4,-2.1 -5,-1.1" transform="translate(6,6) rotate(90)"></polyline><polyline class="fill" points="-1,-1 -1.1,-5 -2.1,-4 -4.1,-6 -6,-4.1 -4,-2.1 -5,-1.1" transform="translate(6,6) rotate(180)"></polyline><polyline class="fill" points="-1,-1 -1.1,-5 -2.1,-4 -4.1,-6 -6,-4.1 -4,-2.1 -5,-1.1" transform="translate(6,6) rotate(270)"></polyline></svg></div></button> </div> </div><div class="sidedock invisible hidden" role="toolbar" hidden=""> <div class="box"><label class="rounded-box hidden like-label" role="presentation"><span>Like</span></label><button class="like-button rounded-box" aria-label="Like" data-label-add="Like" data-label-add-logged-out="Like (opens in a new window)" data-label-remove="Unlike"> <svg class="like-icon" viewBox="0 0 110 81" preserveAspectRatio="xMidYMid" tabindex="-1"><path class="fill" d="M82.496 1c-14.698 0-25.969 11.785-27.496 13.457-1.526-1.672-12.798-13.457-27.494-13.457-16.299 0-27.506 15.037-27.506 27.885 0 12.795 12.562 22.558 22.245 27.592 9.186 4.771 30.601 18.349 32.755 24.523 2.154-6.174 23.57-19.752 32.755-24.523 9.684-5.034 22.245-14.797 22.245-27.592 0-12.848-11.206-27.885-27.504-27.885z"></path></svg> </button></div> <div class="box"><label class="rounded-box hidden watch-later-label" role="presentation"><span>Add to Watch Later</span></label><button class="watch-later-button rounded-box" aria-label="Add to Watch Later" data-label-add="Add to Watch Later" data-label-add-logged-out="Add to Watch Later (opens in a new window)" data-label-remove="Remove from Watch Later"> <svg class="watch-later-icon" viewBox="0 0 20 20" preserveAspectRatio="xMidYMid" tabindex="-1"><polyline class="fill hour-hand" points="9.64,4.68 10.56,4.68 11.28,11.21 8.93,11.21 9.64,4.68"></polyline><polyline class="fill minute-hand" points="14.19,13.65 13.7,14.14 8.58,10.4 10.44,8.5 14.19,13.65"></polyline><circle class="stroke" cx="10" cy="10" r="8" stroke-width="2"></circle></svg> </button></div> <div class="box"><label class="rounded-box hidden share-label" role="presentation"><span>Share</span></label><button class="share-button rounded-box" aria-label="Share"> <svg class="share-icon" viewBox="0 0 20 20" preserveAspectRatio="xMidYMid" tabindex="-1"><polygon class="fill" points="20,0 0,12 5,15 17,4 7,16 7,19 9,17 14,20"></polygon></svg> </button></div></div></div><div class="overlay-wrapper hidden" hidden=""><div class="overlay-cell"><div class="overlay" role="dialog" aria-live="assertive"></div><div class="overlay-icon-wrapper hidden"><div class="overlay-icon"></div></div><div class="overlay-logo logo"></div></div><nav><button class="back cloaked" aria-label="Back"><svg class="icon-back" viewBox="0 0 64 64" preserveAspectRatio="xMidYMid" tabindex="-1"><path class="fill" d="M0 32l32 32v-20h32l0-24h-32v-20z"></path></svg></button><button class="close" aria-label="Close overlay"><svg class="icon-close" viewBox="0 0 64 64" preserveAspectRatio="xMidYMid" tabindex="-1"><path class="fill" d="M60 48.796l-16.812-16.796 16.812-16.796-11.204-11.204-16.796 16.804-16.804-16.804-11.196 11.204 16.796 16.796-16.796 16.796 11.196 11.204 16.804-16.804 16.796 16.804z"></path></svg></button></nav></div><div class="notification-wrapper hidden" hidden=""><div class="notification-cell"><div class="notification" role="dialog" aria-live="assertive"></div></div></div><div class="stats-debug rounded-box hidden" aria-hidden="true" hidden="" style="display: block;"><p><span class="stats-debug-label">Clip ID:</span><span class="stats-debug-value stats-debug-clip-id">177269328</span></p><p style="display: block;"><span class="stats-debug-label">Profile ID:</span><span class="stats-debug-value stats-debug-profile-id">165</span></p><p><span class="stats-debug-label">Delivery:</span><span class="stats-debug-value stats-debug-delivery">dash</span></p><p style="display: block;"><span class="stats-debug-label">Playing:</span><span class="stats-debug-value stats-debug-resolution">960×540@24 1,721 Kbps</span></p><p style="display: block;"><span class="stats-debug-label">Embed size:</span><span class="stats-debug-value stats-debug-dimensions">650×368 </span></p><p style="display: block;"><span class="stats-debug-label">CDN:</span><span class="stats-debug-value stats-debug-cdn">fastly_skyfire</span></p><p><span class="stats-debug-label">Separate AV:</span><span class="stats-debug-value stats-debug-test-group">false</span></p><p style="display: block;"><span class="stats-debug-label">Dropped frames:</span><span class="stats-debug-value stats-debug-dropped-frames">5 / 83</span></p><p style="display: block;"><span class="stats-debug-label">Bandwidth:</span><span class="stats-debug-value stats-debug-bandwidth">7,884 Kbps</span><span class="stats-debug-bandwidth-minmax" style="display: block;"> (<span class="stats-debug-value stats-debug-bandwidth-min">6,283 Kbps</span><span class="stats-debug-value stats-debug-bandwidth-max">7,884 Kbps</span>) </span></p><div class="stats-debug-time-series"><svg width="200" height="14" viewBox="0 0 200 14"><g><polyline stroke="white" fill="none" points="0.23246753246753243,1.3357048011264325 6.886863136863138,2.8433279265829334 10.215997335997336,0"></polyline></g></svg></div><button class="stats-debug-close" aria-label="Close stats debug panel"><svg class="icon-close" viewBox="0 0 64 64" preserveAspectRatio="xMidYMid" tabindex="-1"><path class="fill" d="M60 48.796l-16.812-16.796 16.812-16.796-11.204-11.204-16.796 16.804-16.804-16.804-11.196 11.204 16.796 16.796-16.796 16.796 11.196 11.204 16.804-16.804 16.796 16.804z"></path></svg></button><input type="text" class="stats-debug-code"><a href="javascript:void(0)" class="stats-debug-copy" target="_blank">Open link</a></div><div role="alertdialog" aria-label="Alert" aria-atomic="true" class="player-alert hidden" hidden=""><button data-close="" aria-label="Close alert" class="close"><svg class="icon-close" viewBox="0 0 64 64" preserveAspectRatio="xMidYMid" tabindex="-1"><path class="fill" d="M60 48.796l-16.812-16.796 16.812-16.796-11.204-11.204-16.796 16.804-16.804-16.804-11.196 11.204 16.796 16.796-16.796 16.796 11.196 11.204 16.804-16.804 16.796 16.804z"></path></svg></button></div></div>
+<div class="video-wrapper"><div class="video cover" data-thumb="https://i.vimeocdn.com/video/584650982.webp?mw=700&amp;mh=396" data-thumb-width="700" style="background-image: none;"><div class="telecine" style="transform: scale(1.0065);"><video preload="" src="blob:https://player.vimeo.com/1ea7f3ad-0f28-420d-bd48-8df7ab621e2f"></video></div></div></div>
+</body>

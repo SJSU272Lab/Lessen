@@ -1,0 +1,73 @@
+<html >
+<title>Your Lessen Shopping Cart</title>
+<link rel="stylesheet" type="text/css" href="/stylesheets/cart.css">
+<body class="cartbody">
+<a href="/homepage" class="iclg" _sp="m570.l2586" id="gh-la"><img width="98" height="100"; position:absolute;  alt="" src="/images/logo.jpg" id="gh-logo"></a>
+<br>
+<br>
+<div>
+    <div id="PageTitle" class="col-sm-100 clearfix">
+        <h1 class="title">Your Lessen Shopping Cart</h1>
+    </div>
+</div>
+<div id="maincontent" class="col-sm-100 clearfix">
+    <div id="leftcontent">
+        <div id="shopcart" class="leftdiv">
+            <% if(items && items.length != 0) {for(var i = 0; i < items.length; i++) {%>
+            <div class="insidecart">
+                <div class="sellrow">
+                    Donor:<span style="color:grey;margin-left:10px"><%= items[i].nameValuePairs.product_seller.user_firstName%> <%= items[i].nameValuePairs.product_seller.user_lastName%></span>
+                </div>
+                <a href="/showproduct/<%= items[i]._id%>"><%=items[i].nameValuePairs.product_name%></a>
+                $<%=items[i].nameValuePairs.product_price%>
+                <br>
+                <div class="sellrow2">
+                     <img width="98" height="100" src="<%= items[i].nameValuePairs.product_image_url%>">
+                    <div class="remove" style="float:right;color:#135dbd;margin-right:20px;margin-top:130px;">
+                        <form action="/cart/remove/<%=items[i]._id%>" method="post" >
+                            <input type="submit" class="checkbtn" value="Remove">
+                            <!--<a href="/cart/remove/<%=items[i]._id%>" method="post" role="button">Remove</a>-->
+                        </form>
+                    </div>
+                </div>
+                <%}} else {%>
+                <div>
+                    <h4>Your shopping cart is empty, but it doesn't have to be.</h4>
+                </div>
+                <%}%>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="rightcontent" class="rightdiv">
+        <div class="pb15">
+            <h2 class="cartsummary" >Cart summary <span class="items"></span></h2>
+
+            <div aria-hidden="true" class="pt10">
+                <hr class="solidLine"></div>
+        </div>
+
+        <div id="Total" class="cartsummary" style="margin-top:20px;margin-left:30px">
+            <span>Total: </span><span>$<%=total%></span>
+        </div>
+
+
+        <%if (total <= 0 ){ %>
+        <button class="checkbtn" onclick="location.href='/payment'" disabled>Checkout</button>
+        <%} else {%>
+        <button class="checkbtn" onclick="location.href='/payment'">Checkout</button>
+        <%}%>
+
+        <button class="checkbtn" onclick="location.href='/homepage'">Continue Shopping</button>
+        <div style="margin-top:25px;margin-left:30px"></div>
+        <div style="margin-left:30px;" class="items">
+            Covers your purchase price plus original shipping <br>on virtually all items.
+            Get the item you ordered <br>or get your money back.&nbsp;
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

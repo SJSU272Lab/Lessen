@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Lessen | All Donations</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <a href="/homepage"><img width="98" height="100" alt="" src="/images/logo.jpg" id="gh-logo"></a>
+</head>
+
+<body style="background-color:#f5f5f5">
+<!--<a href="/homepage" style="background-color:#747b82"type="button" class="btn btn-primary">Homepage</a>-->
+<br>
+<br>
+<br>
+<div style="margin-left:20px">
+    Hi, <%= user.user_firstName %> <%= user.user_lastName %>!
+</div>
+<br>
+<div class="panel panel-primary" style="margin-left:20px;width:90%">
+    <div class="panel-heading" style="background-color:#747b82">
+        <h3 class="panel-title">Donation History</h3>
+    </div>
+    <div class="panel-body" style="margin-left:20px">
+        <% if (soldInfo && soldInfo.length > 0 ) { for(var i=0; i<soldInfo.length; i++) { %>
+        <p><%= i+1 %>>. You donated items worth : $<%= soldInfo[i].nameValuePairs.product_price %> on <%= soldInfo[i].nameValuePairs.transactionTime%></p>
+        <%}} else { %>
+        <p> You haven't made any donations.</p>
+        <%}%>
+    </div>
+</div>
+
+<div style="margin-left:20px;">
+    <a href="/homepage" type="button" style="background-color:#747b82" class="btn btn-primary">Homepage</a>
+</div>
+<br>
+<br>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Electronics, Cars, Fashion and More | Lessen</title>
+    <a href="/homepage"><img width="98" height="100" alt="" src="/images/logo.jpg" id="gh-logo"></a>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/products.css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <meta http-equiv="Cache-Control"
+          content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <script>
+        $(function(){
+            $(".category").click(function(){
+                var catid = $(this).attr("id");
+                $.ajax({
+                    url: "/listproducts/"+catid,
+                    type: "get",
+                    success : function(data){
+                        var content = "";
+                        console.log(data.length);
+                        for(var i= 0; i < data.length; i++){
+                            content += "<a href=";
+                            content += "/showproduct/"+data[i]._id +">";
+                            content +=data[i].product_name+"</a><br>";
+                        }
+                        console.log(content);
+                        $("#content_"+catid).html(content);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+
+<body style="background-color:#f5f5f5">
+
+<% include ./navheader.ejs %>
+
+<div>
+    <a href="/homepage"><img width="140" height="200" style="clip:rect(47px, 118px, 95px, 0px); top:35px;left:50px;" alt="" src="/images/ebaylogo.png" id="gh-logo"></a>
+    <!--<a href="/homepage" style="background-color:#747b82"type="button" class="btn btn-primary">Homepage</a>-->
+    <form class="navbar-form navbar-left" role="search" style="top:60px;left:270px;margin-left:140px;margin-top:-42px" method = "post" action = "/search">
+        <div class="form-group" >Search products
+            <input name="productName" type="text" class="form-control" size="60" placeholder="Search">
+        </div>
+        <select class="dropdown" name="cat" id="options" style="width:170px; height: 35px">
+
+            <% for(var i = 0; i < categories.length;i++){%>
+            <option value="<%= categories[i].category_id %>"><%= categories[i].category_name %></option>
+            <% } %>
+        </select>
+
+        <button type="submit" class="btn btn-default">Search</button>
+    </form>
+</div>
+
+<br>
+
+<div class="row" >
+    <div class="col-sm-12" style="margin-top:20px;">
+        <!--Level 1: .col-sm-9-->
+        <div class="row">
+            <div class="col-xs-8 col-sm-6" style="width:350px;">
+                <!-- Level 2: .col-xs-8 .col-sm-6-->
+
+            </div>
+            <div class="col-xs-4 col-sm-6" style="width:750px;">
+                <!--Level 2: .col-xs-4 .col-sm-6-->
+
+                <% if (product.product_type==0) { %>
+                <h3>Product name: <%= product.product_name%></h3>
+                <h4 style="margin-left:0px">Price: $<%= product.product_price%></h4>
+                <form method="post" action= "/cart">
+                    <input type="hidden" name="product_id" value= "<%=product._id%>">
+                    <input type="hidden" name="seller_id" value= "<%=product.product_seller._id%>">
+
+                    <%if (product.product_stock==0){%>
+                    <input type="submit" class="btn btn-primary" value="Add to cart" disabled/>
+                    <%} else {%>
+                    <input type="submit" class="btn btn-primary" value="Add to cart"/>
+                    <%} %>
+                </form><br>
+                <p>Available quantity: <%if (product.product_stock==0){%>Sold Out
+                    <%}else{%>
+                    <%= product.product_stock%>
+                    <%}%></p>
+                <p>Condition: <%if (product.product_condtion==0){%>Refurbished
+                    <%}else{%>
+                    New
+                    <%}%></p>
+                <p>Seller: <%= product.product_seller.user_firstName + " "+ product.product_seller.user_lastName %></p>
+                <p>Category: <%= product.product_category_name%></p>
+                <p>Description: <%= product.product_desc%></p>
+
+
+                <% }else{ %>
+                <h3>Product name: <%= product.product_name%></h3>
+                <h4>Bidding start price: $<%= product.product_bid_start_price%></h4>
+                <p>Available quantity: <%if (product.product_stock==0){%>Sold Out
+                    <%}else{%>
+                    <%= product.product_stock%>
+                    <%}%></p>
+                <p>Seller: <%= product.product_seller.user_firstName + " "+ product.product_seller.user_lastName %></p>
+                <p>Bid start time: <%= product.Product_bid_start_time%></p>
+                <p>Bid end time: <%= product.product_bid_end_time%></p>
+                <p>Category: <%= product.product_category_name%></p>
+                <p>Description: <%= product.product_desc%></p>
+                <% var now = new Date(); %>
+                <% if (product.product_type==1 && product.product_bid_end_time>now && product.product_bid_end==0) {%>
+                <form method="post" name="form2" id="form2" action="/product/bid/<%=product._id%>">
+                    <input id="submit" name="submit" type="submit" value="BID!" />
+                    <input id="myprice" name="myprice" type="text" />
+                    <input type ="hidden" id="id" name="quantity" value="<%=product.product_stock %>" />
+                </form>
+                <h4> Current highest price:
+                    <%if (product.product_max_bid_price!=0) {%>
+                    $<%=product.product_max_bid_price%>
+                    <%} else {%>
+                    Nobody have bid on this yet.
+                    <%}%>
+                </h4>
+                <%} else if (product.product_type==1 && product.product_bid_end_time<now && product.product_bid_end==0){%>
+                <form method="post" name="form2" id="form2" action="/product/bid/<%=product._id%>">
+                    <input id="submit" name="submit" type="submit" value="Auction Has Ended!" disabled/>
+                </form>
+                <h4> Current highest price:
+                    <%if (product.product_max_bid_price!=0) {%>
+                    $<%=product.product_max_bid_price%>
+                    <%} else {%>
+                    Nobody have bid on this yet.
+                    <%}%>
+                </h4>
+                <%}else {%>
+                <form method="post" name="form2" id="form2" action="/bid/<%=product._id%>">
+                    <input id="submit" name="submit" type="submit" value="Auction Has Ended! Please Check your Account" disabled/>
+                </form>
+                <h4> Current highest price:
+                    <%if (product.product_max_bid_price!=0) {%>
+                    $<%=product.product_max_bid_price%>
+                    <%} else {%>
+                    Nobody have bid on this yet.
+                    <%}%>
+                </h4>
+                <% } %>
+                <%}%>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

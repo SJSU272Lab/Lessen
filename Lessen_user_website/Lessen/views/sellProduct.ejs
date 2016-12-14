@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <a href="/homepage"><img width="98" height="100" alt="" src="/images/logo.jpg" id="gh-logo"></a>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        function displayForm(c){
+            if(c.value == "1"){
+                document.getElementById("f1").style.display='table';
+                document.getElementById("f2").style.display='none';
+            }
+            else if(c.value =="2"){
+                document.getElementById("f1").style.display='none';
+                document.getElementById("f2").style.display='table';
+            }
+            else{
+            }
+        }
+    </script>
+
+<body style="background-image: url(http://p.ebaystatic.com/aw/sell/lnd/hero_7plus_new@2x.jpg)" role="presentation">
+
+<form>
+    <label>Donate<input value="1" type="radio" name="formselector" onclick="displayForm(this)"></label>
+   <!-- <label>Donate Madi<input value="1" type="radio" name="formselector"></label>-->
+   <!-- <label>Auction Donate<input value="2" type="radio" name="formselector" onclick="displayForm(this)"></label>-->
+</form> <br>
+
+<form  style ="display:none" id="form1"><label>Form 1<input type="text"/> </label></form>
+
+<!--<form  style ="display:none" id="form2" ><label>Form 2<input type="text"/> </label></form>-->
+<form  style ="display:none" id = "f1"  encType="multipart/form-data" method="post" action= "/directsell">
+    <table cellpadding="20" border="0">
+        <tr><td> Product Name:  </td><td>   <input type="text" name="productName" required/></td></tr>
+        <tr> <td><p> </p></td><td><p> </p></td> </tr>
+        <tr><td>Product Purchase Price:  </td><td>   <input type="text" name="productPrice" required/></td></tr>
+        <tr> <td><p> </p></td><td><p> </p></td> </tr>
+
+        <tr><td> Product Quantity: </td><td> <input type="number" name="productQty" min= "1" required /></td></tr>
+        <tr> <td><p> </p></td><td><p> </p></td> </tr>
+        <tr><td>Product Description: </td><td>  <input type="text" name="productDesc"/></td></tr>
+        <tr> <td><p> </p></td><td><p> </p></td> </tr>
+        <tr><td>Product Category: </td><td> <select name="productCategory">
+                    <option value="1">Motors</option>
+                    <option value="2">Fashion</option>
+                    <option value="3">Electronics</option>
+                    <option value="4">Collectibles&Arts</option>
+                    <option value="5">Home&Garden</option>
+                    <option value="6">SportingGoods</option>
+                    <option value="7">Toys&Hobbies</option>
+                    <option value="8">Business&Industrial</option>
+                    <option value="9">Music</option>
+                    <option value="10">Other</option>
+                </select></td></tr>
+        <tr> <td><p> </p></td><td><p> </p></td> </tr>
+        <tr><td>Product Condition: </td><td> <select name="productCondition" required>
+                    <option value="0">New</option>
+                    <option value="1">Used</option>
+                </select></td></tr>
+        <tr> <td><p> </p></td><td><p> </p></td> </tr>
+        <tr><td>Image: </td><td> <input type="file" name="imageFile" accept=".jpeg,.png,.jpg" required/></td></tr>
+        <tr> <td><p> </p></td><td><p> </p></td> </tr>
+    </table>
+    <input type="submit" class="btn btn-primary" value="Donate"/>
+</form>
+
+<!--<form  style ="display:none;" id = "f2" encType="multipart/form-data" method="post" action= "/auctionsell" >
+
+    <table cellpadding="20" border="0">
+        <tr><td>Product Name:</td><td>  <input type="text" name="productName" required/></td></tr>
+        <tr> <td><p> </p></td><td><p> </p></td> </tr>
+
+
+        <tr><td>Product Auction Start Price: </td><td>    <input type="text" name="productStartPrice" required/></td></tr>
+        <tr> <td><p> </p></td><td><p> </p></td> </tr>
+        <tr><td>Auction listing time(from now) </td><td><select name="productListTime" required>
+                    <option value="1">4 day</option>
+                </select></td></tr>
+        <tr> <td><p> </p></td><td><p> </p></td> </tr>
+        <tr><td> Product Description:   </td><td>   <input type="text" name="productDesc" required/></td></tr>
+        <tr> <td><p> </p></td><td><p> </p></td> </tr>
+        <tr><td> Product Category: </td><td> <select name="productCategory">
+                    <option value="1">Motors</option>
+                    <option value="2">Fashion</option>
+                    <option value="3">Electronics</option>
+                    <option value="4">Collectibles&Arts</option>
+                    <option value="5">Home&Garden</option>
+                    <option value="6">SportingGoods</option>
+                    <option value="7">Toys&Hobbies</option>
+                    <option value="8">Business&Industrial</option>
+                    <option value="9">Music</option>
+                    <option value="10">Other</option>
+                </select></td></tr>
+        <tr> <td><p> </p></td><td><p> </p></td> </tr>
+        <tr><td> Product Condition: </td><td> <select name="productCondition">
+                    <option value="0">New</option>
+                    <option value="1">Used</option>
+                </select></td></tr>
+        <tr> <td><p> </p></td><td><p> </p></td> </tr>
+        <tr><td>Image: </td><td> <input type="file" name="imageFile" accept=".jpeg,.png,.jpg" required/></td></tr>
+        <tr> <td><p> </p></td><td><p> </p></td> </tr>
+    </table>
+
+    <input type="submit" class="btn btn-primary" value="Donate"/>
+
+</form>-->
+<br>
+<a href="/homepage" type="button" class="btn btn-primary">Homepage</a>
+</div>
+
+</body>
+</html>

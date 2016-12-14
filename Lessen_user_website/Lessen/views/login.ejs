@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign in or Register | Lessen</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/signin.css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <script src="angularjs/login.js"></script>
+    <meta http-equiv="Cache-Control"
+          content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+</head>
+
+<body ng-app="myapp" ng-controller="loginCtrl">
+<!--<body class="signincontent">-->
+<div>
+    <div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="col-md-4">
+                    <img role="presentation" width="467" height="279" position:absolute; top:-60px;left:1200px" alt=""
+                         src="https://www.savers.com/sites/default/files/animated-gif2_1.gif" id="gh-logo">
+                </div>
+
+                <!-- main -->
+
+                <main ui-view>
+                    <div class="container">
+                        <div class="login-signup">
+                            <div class="row">
+                                <div class="col-sm-6 nav-tab-holder">
+                                    <ul class="nav nav-tabs row" role="tablist">
+                                        <li role="presentation" class="active col-sm-6"><a href="#signin" aria-controls="signin" role="tab" data-toggle="tab">Sign in</a></li>
+                                        <li role="presentation" class="col-sm-6"><a href="#register" aria-controls="register" role="tab" data-toggle="tab">Register</a></li>
+                                    </ul>
+                                </div>
+
+                            </div>
+
+
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="signin">
+                                    <div class="row">
+
+                                        <div class="col-sm-5 mobile-pull">
+                                            <article role="signin">
+                                                <form action="/validateuser" method="post" class="afterSignIn">
+                                                <!--<form class="afterSignIn">-->
+                                                    <div class="form-group alert alert-danger" ng-hide="invalid_login">
+                                                        Oops, that's not a match.
+                                                    </div>
+                                                    <%if (invalid_login != false) {%>
+                                                    <div class="form-group">
+                                                    Oops, that's not a match.
+                                                    </div>
+                                                    <%}%>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" ng-model="username" name="username" id="username" placeholder="Email" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="password" class="form-control" ng-model="password" name="password" id="password" placeholder="Password" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <!--<input type="submit" class="btn btn-success btn-block" ng-click="validate();" value="Sign in" >-->
+                                                        <input type="submit" class="btn btn-success btn-block" value="Sign in" >
+                                                    </div>
+                                                    <!--<div class="alert alert-danger" ng-hide="unknown_error">-->
+                                                        <!--<strong>Something went wrong</strong>-->
+                                                    <!--</div>-->
+                                                </form>
+
+                                            </article>
+                                        </div>
+
+                                        <div class="col-sm-7">
+                                            <!-- some admin  existed here -->
+                                        </div>
+
+                                    </div>
+                                    <!-- end of row -->
+                                </div>
+                                <!-- end of home -->
+
+                                <div role="tabpanel" class="tab-pane" id="register">
+                                    <div class="row">
+
+                                        <div class="col-sm-6 mobile-pull">
+                                            <article role="register">
+
+                                                <form class="register" action="/register" method="post" >
+                                                    <!--<form class="register">-->
+                                                    <%if (invalid_first_name||
+                                                            invalid_last_name || invalid_zip || invalid_email || invalid_phone
+                                                            || invalid_city || invalid_state) {%>
+                                                    <div class="form-group">
+                                                        Correct the following fields: <ul><%if (invalid_first_name) { %> <li>First Name</li> <% } %>
+                                                        <%if (invalid_last_name) { %> <li>Last Name </li><% } %>
+                                                        <%if (invalid_email) { %> <li>Email</li> <% } %>
+                                                        <%if (invalid_city) { %> <li>City</li> <% } %>
+                                                        <%if (invalid_state) { %> <li>State</li> <% } %>
+                                                        <%if (invalid_zip) { %> <li>Zip</li> <% } %>
+                                                        <%if (invalid_phone) { %> <li>Phone</li> <% } %> </ul>
+                                                    </div>
+                                                    <%}%>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" ng-model="firstname" name="firstname" id="firstname" placeholder="First name" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" ng-model="lastname" name="lastname" id="lastname" placeholder="Last name" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="email" class="form-control" ng-model="email" name="email" id="email" placeholder="Email Address" required>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <input type="password" class="form-control" ng-model="password" name="password" id="password" placeholder="Password" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" ng-model="address" name="address" id="address" placeholder="Address" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" ng-model="city" name="city" id="city" placeholder="City" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" ng-model="state" name="state" id="state" placeholder="State" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="number" class="form-control" ng-model="zip" name="zip" id="zip" placeholder="Zip" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="number" class="form-control" ng-model="phone" name="phone" id="phone" placeholder="Phone" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" ng-model="dob" name="dob" id="dob" placeholder="Date of Birth" onfocus="(this.type='date')"required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <!--<input type="submit" class="btn btn-success btn-block" ng-click="register();" value="Register">-->
+                                                        <input type="submit" class="btn btn-success btn-block" value="Register">
+                                                    </div>
+                                                </form>
+                                            </article>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <!-- some user  existed here -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+
+                <!-- footer -->
+                <footer></footer>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

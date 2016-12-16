@@ -41,8 +41,6 @@ Through this implementation our goal is to minimize operational cost by providin
 The solution was implemented using Mean Stack for website and Android studio for mobile
 app. The application is hosted on AWS 
 
-
-
 ###Procedures:
 
 Our approach to minimize operational cost involves implementing a portal as a platform for donors and buyers to upload items to be donated by donors and their prospective buyer to look into same platform. Admin keeps track of the donations made by area, if there are multiple donations from a area, admin creates donation event so that both donor and buyer can come to donation drive and items will be sold on the same day hence by reducing operation cost. These events will be posted on social media and also on website portal where every user can look for upcoming events.   
@@ -77,12 +75,13 @@ User can perform the following tasks from mobile:<br/>
 
 ## Admin
 
+Admin is at the heart of the application. All products uploaded for donation, must get an admin approval before being auctioned. The admin can, at anytime, edit/remove a product. Admin has control of arranging for logistics, and creating donation events based on the most hot donation zones.
+
+###Log Analytics using ELK Stack
+
+The user logs have been analyzed using ELK stack. These analytics provide insights on the number of active users, timeframes of peak user activity, trending product categories, most viewed products, product bid tracking and many more.
+
 ## Webpage
-
-
-
-
-  
 
 
 ## Results:

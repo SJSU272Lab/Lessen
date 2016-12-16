@@ -72,6 +72,8 @@ User can perform the following tasks from mobile:<br/>
 <img src="https://s30.postimg.org/z2hdekps1/Capture4.jpg" width="39%" align="center" />
 
 <br/>
+<br/>
+<br/>
 
 ## Admin
 

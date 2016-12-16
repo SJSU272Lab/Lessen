@@ -43,14 +43,14 @@ app. The application is hosted on AWS
 
 
 
-Procedures:
+###Procedures:
 
 Our approach to minimize operational cost involves implementing a portal as a platform for donors and buyers to upload items to be donated by donors and their prospective buyer to look into same platform. Admin keeps track of the donations made by area, if there are multiple donations from a area, admin creates donation event so that both donor and buyer can come to donation drive and items will be sold on the same day hence by reducing operation cost. These events will be posted on social media and also on website portal where every user can look for upcoming events.   
 
 
 
 
-Usecases:
+###Usecases:
 
 - A **_donor_**, can donate any item using mobile application or through website.
 - A **_buyer_**, can buy any item from a mobile application or through website.

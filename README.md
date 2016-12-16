@@ -59,11 +59,11 @@ Our approach to minimize operational cost involves implementing a portal as a pl
 
 ### Mobile Application  
 
-Mobile Application User Interface:
-User can perform the following tasks from mobile:
--Upload an item for bidding
--Bid for a product
--Get event notification
+####Mobile Application User Interface <br/>
+User can perform the following tasks from mobile:<br/>
+-Upload an item for bidding <br/>
+-Bid for a product <br/>
+-Get event notification <br/>
 
 ## Screenshots 
 
@@ -71,9 +71,11 @@ User can perform the following tasks from mobile:
 <img src="https://s24.postimg.org/dokwo9uud/Capture3.jpg" width="28%" align="left" />
 <img src="https://s30.postimg.org/z2hdekps1/Capture4.jpg" width="39%" align="center" />
 
+<br/>
 
+## Admin
 
-## Screenshots
+## Webpage
 
 
 
@@ -81,12 +83,11 @@ User can perform the following tasks from mobile:
   
 
 
-
-##Results:
+## Results:
 
 By creating a website portal and mobile app, we will be able to bring the donor and buyer closer. Also, by analyzing and tracking the donations made depending on city, admin can create donation events. This will result in reduced operational cost as items donated will get sold the same day excluding the need to gather items from donors, storage and maintenance costs .
 
-Conclusions:
+##Conclusions:
 
 So the idea is to implement a platform which brings donors and buyers together and to generate  revenue from items donated with lowest operating costs.
 

@@ -1,6 +1,6 @@
 # Fall16-Team19
 
-##Lessen
+##Lessen (The website has been hosted on AWS @http://54.187.80.226/ )
 
 <a href="https://www.dropbox.com/s/1n3k0cfbx6rsvde/LessenAndroidApplication.apk?dl=0" rel="Android APK"><img src="https://s29.postimg.org/yuhsi1glz/download.png" ></a>
 
@@ -93,5 +93,9 @@ By creating a website portal and mobile app, we will be able to bring the donor 
 
 So the idea is to implement a platform which brings donors and buyers together and to generate  revenue from items donated with lowest operating costs.
 
+## Team Members
+
+| [https://avatars1.githubusercontent.com/u/22249100?v=3&s=400<br /><sub>Sandeep Chawan</sub>]https://github.com/sandeepchawan<br /> | [![Neha Kumar](https://avatars.githubusercontent.com/nehasingh2102)<br /><sub>Neha Kumar</sub>](https://github.com/nehasingh2102)<br /> | [![Srinivas Rao Velaga](https://avatars.githubusercontent.com/)<br /><sub>Srinivas RAo Velaga</sub>](https://github.com/shettyaditi)<br />| [![Shilpa Chandra](https://avatars.githubusercontent.com/khurana3773?s=100)<br /><sub>Shilpa Chandra</sub>](https://github.com/shilpachandra)<br />|
+| :---: | :---: | :---: | :---: |
 
 

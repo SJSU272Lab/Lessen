@@ -27,7 +27,6 @@ Rakesh Ranjan
 
 Project Name: 	Lessen
 
-Github link for website  	Github link for Admin  	Android App
 
 
 			       Website hosted on AWS:   

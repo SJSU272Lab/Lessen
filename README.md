@@ -95,7 +95,7 @@ So the idea is to implement a platform which brings donors and buyers together a
 
 ## Team Members
 
-| [https://avatars.githubusercontent.com/sandeepchawan<br /><sub>Sandeep Chawan</sub>]https://github.com/sandeepchawan<br /> | [![Neha Kumar](https://avatars.githubusercontent.com/nehasingh2102)<br /><sub>Neha Kumar</sub>](https://github.com/nehasingh2102)<br /> | [![Srinivas Rao Velaga](https://avatars.githubusercontent.com/)<br /><sub>Srinivas RAo Velaga</sub>](https://github.com/)<br />| [![Shilpa Chandra](https://avatars.githubusercontent.com/)<br /><sub>Shilpa Chandra</sub>](https://github.com/shilpachandra)<br />|
+| [https://avatars.githubusercontent.com/sandeepchawan<br /><sub>Sandeep Chawan</sub>](https://github.com/sandeepchawan)<br /> | [![Neha Kumar](https://avatars.githubusercontent.com/nehasingh2102)<br /><sub>Neha Kumar</sub>](https://github.com/nehasingh2102)<br /> | [![Srinivas Rao Velaga](https://avatars.githubusercontent.com/SrinivasaRaoVelaga)<br /><sub>Srinivas RAo Velaga</sub>](https://github.com/SrinivasaRaoVelaga)<br />| [![Shilpa Chandra](https://avatars.githubusercontent.com/ShilpaChandra266)<br /><sub>Shilpa Chandra</sub>](https://github.com/ShilpaChandra266)<br />|
 | :---: | :---: | :---: | :---: |
 
 
